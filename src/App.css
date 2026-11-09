@@ -183,6 +183,15 @@ a { color: inherit; }
 
 .dashboard { width: min(100%, 1190px); margin: 0 auto; padding: 32px 48px 25px; }
 .welcome-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 25px; margin-bottom: 22px; }
+.plant-tabs { display: flex; align-items: center; gap: 7px; margin: -7px 0 15px; }
+.plant-tabs > span { margin-right: 5px; color: #a0a69c; font-size: 8px; font-weight: 700; letter-spacing: 1px; }
+.plant-tab { display: inline-flex; min-height: 27px; align-items: center; gap: 6px; padding: 0 9px; border: 1px solid transparent; border-radius: 8px; color: #8e958b; font-size: 9px; text-decoration: none; transition: background .2s ease, color .2s ease, border-color .2s ease; }
+.plant-tab:hover { background: #f4f6f0; color: #51694d; }
+.plant-tab.selected { border-color: #e8ebe4; background: #fff; color: #51664e; font-weight: 600; }
+.plant-tab-dot { width: 7px; height: 7px; border-radius: 50%; }
+.eggplant-dot { background: #73548d; }
+.tomato-dot { background: #cf6045; }
+.plant-tab-current { margin-left: 3px; color: #9aa493; font-size: 6px; font-weight: 700; letter-spacing: .5px; }
 .eyebrow { display: flex; align-items: center; gap: 7px; margin: 0 0 12px; color: #8c9786; font-size: 9px; }
 .eyebrow-dot, .stage-pill > span { width: 6px; height: 6px; border-radius: 50%; background: #87a474; }
 h1, h2, h3, p { margin-top: 0; }
@@ -209,6 +218,11 @@ h1, h2, h3, p { margin-top: 0; }
   border-radius: 17px;
   background: linear-gradient(110deg, #f1f5eb 0%, #eff4e9 52%, #e8efdf 100%);
 }
+.tomato-theme .hero-card { border-color: #efe5d8; background: linear-gradient(110deg, #f8f2e9 0%, #f7f0e5 52%, #f1e8d9 100%); }
+.tomato-theme .hero-copy h2 em { color: #ba5941; }
+.tomato-theme .stage-pill { border-color: #eee2d5; color: #a2735c; }
+.tomato-theme .stage-pill > span { background: #d27657; box-shadow: 0 0 0 3px #f4e3d8; }
+.tomato-theme .art-note { border-color: #f0e5d9; }
 .hero-copy { position: relative; z-index: 1; width: 52%; max-width: 410px; }
 .stage-pill { display: inline-flex; height: 24px; align-items: center; gap: 7px; padding: 0 9px; border: 1px solid #dfe8d8; border-radius: 30px; background: rgb(255 255 255 / 62%); color: #73866c; font-size: 8px; font-weight: 700; letter-spacing: .8px; }
 .stage-pill > span { width: 5px; height: 5px; background: #849b71; box-shadow: 0 0 0 3px #e4eddd; }
@@ -284,6 +298,9 @@ h1, h2, h3, p { margin-top: 0; }
 .journal-button:hover { border-color: #b8c8ad; background: #f4f7f0; }
 
 .guide-section { margin-top: 21px; }
+.tomato-theme .guide-card.guide-current { border-color: #eedfd1; background: #fcf8f2; }
+.tomato-theme .progress-track > span { background: linear-gradient(90deg, #dfa478, #c45d43); }
+.tomato-theme .progress-percent { color: #ae7057; }
 .guide-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin: 0 1px 12px; }
 .guide-heading h3 { margin: 0; color: #334337; font-size: 15px; font-weight: 600; letter-spacing: -.3px; }
 .guide-season { display: flex; align-items: center; gap: 6px; padding-bottom: 2px; color: #9a8b67; font-size: 9px; }

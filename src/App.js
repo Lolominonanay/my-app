@@ -1,20 +1,69 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import './App.css';
 
-const stages = [
-  { name: 'New home', range: 'Days 1–14', state: 'complete' },
-  { name: 'Leafing out', range: 'Days 15–35', state: 'complete' },
-  { name: 'First flowers', range: 'Days 36–55', state: 'current' },
-  { name: 'Little fruits', range: 'Days 56–75', state: 'upcoming' },
-  { name: 'Harvest time', range: 'Days 76–90', state: 'upcoming' },
-];
-
-const initialTasks = [
-  { id: 1, title: 'Check the top inch of soil', detail: 'Keep it just a little damp', done: false },
-  { id: 2, title: 'Give stems a gentle tie', detail: 'A little support goes a long way', done: false },
-  { id: 3, title: 'Look for new blossoms', detail: 'Those purple petals are a good sign', done: true },
-];
+const plants = {
+  eggplant: {
+    name: 'Eggplant',
+    variety: 'Black Beauty',
+    day: 42,
+    totalDays: 90,
+    progress: 47,
+    harvestDays: 34,
+    stage: 'First flowers',
+    summary: 'Your eggplant is settling into its flowering stage. Those first blooms mean little fruits are just around the corner.',
+    mood: 'looking leafy',
+    stages: [
+      { name: 'New home', range: 'Days 1–14', state: 'complete' },
+      { name: 'Leafing out', range: 'Days 15–35', state: 'complete' },
+      { name: 'First flowers', range: 'Days 36–55', state: 'current' },
+      { name: 'Little fruits', range: 'Days 56–75', state: 'upcoming' },
+      { name: 'Harvest time', range: 'Days 76–90', state: 'upcoming' },
+    ],
+    tasks: [
+      { id: 1, title: 'Check the top inch of soil', detail: 'Keep it just a little damp', done: false },
+      { id: 2, title: 'Give stems a gentle tie', detail: 'A little support goes a long way', done: false },
+      { id: 3, title: 'Look for new blossoms', detail: 'Those purple petals are a good sign', done: true },
+    ],
+    sunNote: <>Eggplants love a warm, sunny spot — <strong>6–8 hours of sun</strong> is their happy place.</>,
+    guide: [
+      { title: 'Start with warmth', days: 'SOW · 10–14 WEEKS BEFORE LAST FROST', text: 'Sow seeds indoors in a warm, bright spot. They like it cozy — aim for soil around 24–29°C until the first leaves appear.', icon: 'seed' },
+      { title: 'Give them room to grow', days: 'TRANSPLANT · AFTER NIGHTS WARM UP', text: 'Move sturdy seedlings outdoors once frost has passed. Leave about 45–60 cm between plants and choose your sunniest spot.', icon: 'transplant' },
+      { title: 'Flowers become fruit', days: 'FLOWER & FRUIT · YOU ARE HERE', text: 'Keep soil evenly moist, water at the base, and support heavy stems. A gentle shake can help flowers pollinate.', icon: 'flower', current: true },
+      { title: 'Pick while they shine', days: 'HARVEST · OFTEN 65–90 DAYS AFTER TRANSPLANT', text: 'Harvest when the skin is glossy and the fruit feels firm. Snip the stem with pruners, leaving a little cap attached.', icon: 'harvest' },
+    ],
+  },
+  tomato: {
+    name: 'Tomato',
+    variety: 'Sungold',
+    day: 58,
+    totalDays: 85,
+    progress: 68,
+    harvestDays: 20,
+    stage: 'Fruit set',
+    summary: 'Your Sungold is setting its first clusters of fruit. Keep it watered and supported — those little green tomatoes are on their way.',
+    mood: 'fruiting happily',
+    stages: [
+      { name: 'Tiny seedling', range: 'Days 1–14', state: 'complete' },
+      { name: 'Settling in', range: 'Days 15–35', state: 'complete' },
+      { name: 'First flowers', range: 'Days 36–50', state: 'complete' },
+      { name: 'Fruit set', range: 'Days 51–65', state: 'current' },
+      { name: 'Ready to pick', range: 'Days 66–85', state: 'upcoming' },
+    ],
+    tasks: [
+      { id: 1, title: 'Water deeply at the base', detail: 'Steady moisture keeps fruit happy', done: false },
+      { id: 2, title: 'Check the stem ties', detail: 'Keep the growing vine supported', done: false },
+      { id: 3, title: 'Peek for ripening clusters', detail: 'Little green fruits are forming', done: true },
+    ],
+    sunNote: <>Tomatoes are sun seekers — aim for <strong>6–8 hours of direct sun</strong> and water the soil, not the leaves.</>,
+    guide: [
+      { title: 'Give seeds a head start', days: 'SOW · 6–8 WEEKS BEFORE LAST FROST', text: 'Start seeds indoors in a bright, warm spot. Keep the mix gently moist and turn seedlings toward the light as they grow.', icon: 'seed' },
+      { title: 'Move out after frost', days: 'TRANSPLANT · WHEN NIGHTS STAY WARM', text: 'Harden off seedlings for a week before planting outdoors. Bury the stem a little deeper and add a sturdy cage or stake.', icon: 'transplant' },
+      { title: 'Support fruiting vines', days: 'FLOWER & FRUIT · YOU ARE HERE', text: 'Water consistently at soil level, keep ties loose, and give fruit clusters room to ripen. A gentle shake helps flowers pollinate.', icon: 'flower', current: true },
+      { title: 'Pick at peak color', days: 'HARVEST · VARIETY & WEATHER DEPEND', text: 'Harvest when tomatoes reach their full color and give slightly to a gentle squeeze. Pick regularly to keep the plant producing.', icon: 'harvest' },
+    ],
+  },
+};
 
 function Icon({ name, size = 20, strokeWidth = 1.8 }) {
   const paths = {
@@ -74,12 +123,55 @@ function EggplantIllustration() {
   );
 }
 
+function TomatoIllustration() {
+  return (
+    <svg className="eggplant-illustration tomato-illustration" viewBox="0 0 420 340" fill="none" role="img" aria-label="Illustration of ripe tomatoes growing on a leafy vine">
+      <circle cx="277" cy="164" r="127" fill="#F2E9D9" />
+      <circle cx="90" cy="55" r="24" fill="#F3D28B" opacity=".8" />
+      <path d="M225 304c-3-54 2-104-1-151-2-45 8-79 29-112" stroke="#52774F" strokeWidth="7" strokeLinecap="round" />
+      <path d="M224 220c-37-37-72-49-110-39 17 31 54 49 109 49" fill="#71916B" />
+      <path d="M220 218c-38-16-67-26-100-31" stroke="#53744F" strokeWidth="2" />
+      <path d="M225 165c36-46 72-64 111-57-12 35-49 61-107 69" fill="#829D73" />
+      <path d="M230 166c37-23 65-42 97-53" stroke="#5C7C55" strokeWidth="2" />
+      <path d="M232 133c-8-43-1-76 25-99 18 29 18 64-15 104" fill="#75936C" />
+      <path d="M253 42c-8 23-13 51-12 81" stroke="#587A52" strokeWidth="2" />
+      <path d="M229 174c-17-25-37-38-63-39 4 27 24 47 64 57" fill="#91A681" />
+      <path d="M177 141c18 13 34 29 48 48" stroke="#607D57" strokeWidth="2" />
+      <path d="M235 215c20-26 46-38 78-36-8 31-32 49-76 53" fill="#607F59" />
+      <path d="M302 183c-23 14-43 29-64 49" stroke="#4F7049" strokeWidth="2" />
+      <path d="M247 116c7 9 14 17 22 22-4 14-13 25-29 34-7-11-8-23-4-37l11-19Z" fill="#506F49" />
+      <path d="M249 108c-9 20-12 38-9 58" stroke="#425F3F" strokeWidth="2" />
+      <path d="M252 121c16-16 32-19 48-10-10 18-25 27-48 24" fill="#9BAA82" />
+      <path d="M300 111c-17 6-31 13-45 23" stroke="#677F58" strokeWidth="2" />
+      <path d="M246 141c-12 10-17 21-14 33m14-33c4 13 11 19 23 19m-23-19c11-1 20-7 25-17m-25 17c-2-12 1-22 9-30" stroke="#4E7049" strokeWidth="3" strokeLinecap="round" />
+      <path d="M244 166c-22-9-44-8-61 7 11 18 30 25 57 21" fill="#8AA17A" />
+      <path d="M186 173c18 2 35 8 51 18" stroke="#637F58" strokeWidth="2" />
+      <path d="M270 151c23-1 39 15 41 37 2 22-13 39-35 39-22 0-38-17-36-39 1-19 12-33 30-37Z" fill="#C9563D" />
+      <path d="M271 155c-10 11-13 25-11 42 2 11 6 19 12 27-17-3-28-18-27-36 1-16 11-29 26-33Z" fill="#DF7254" opacity=".8" />
+      <path d="M276 152c-4-9-2-16 5-23 2 9 7 14 14 16-8 1-14 5-18 12-3-7-9-11-17-11 6-4 11-5 16-3Z" fill="#5D7E50" />
+      <path d="M288 231c16 0 28 13 28 29 0 16-12 28-28 28-16 0-27-12-27-28 0-16 11-29 27-29Z" fill="#D96A47" />
+      <path d="M288 233c-11 8-15 19-13 34 1 7 4 13 9 18-13-3-21-13-20-26 0-13 9-24 24-26Z" fill="#E78256" opacity=".8" />
+      <path d="M288 232c-3-6-2-11 3-16 2 6 5 9 10 11-5 1-9 4-12 9-2-5-6-8-11-8 4-3 7-3 10-2Z" fill="#668452" />
+      <path d="M111 264c44-12 94-13 142-5" stroke="#A0B297" strokeWidth="1.5" strokeDasharray="3 7" />
+      <path d="M108 279c36-7 63-8 91-6" stroke="#A0B297" strokeWidth="1.5" strokeDasharray="3 7" />
+      <path d="M302 88c2-7 7-12 14-14m5 16c5-4 11-5 17-3" stroke="#A0B297" strokeWidth="2" strokeLinecap="round" />
+      <path d="M90 105c2-7 7-12 14-14m5 16c5-4 11-5 17-3" stroke="#A0B297" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 function App() {
-  const [tasks, setTasks] = useState(initialTasks);
+  const isTomato = new URLSearchParams(window.location.search).get('plant') === 'tomato';
+  const plant = isTomato ? plants.tomato : plants.eggplant;
+  const [tasks, setTasks] = useState(plant.tasks);
   const [note, setNote] = useState('');
   const [savedNote, setSavedNote] = useState('');
   const [showJournal, setShowJournal] = useState(false);
   const completedTasks = tasks.filter((task) => task.done).length;
+
+  useEffect(() => {
+    document.title = `Little Plot — ${plant.name} growing journal`;
+  }, [plant]);
 
   const toggleTask = (id) => {
     setTasks((currentTasks) => currentTasks.map((task) => (
@@ -98,7 +190,7 @@ function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className="app-shell">
+    <div className={`app-shell${isTomato ? ' tomato-theme' : ''}`}>
       <aside className="sidebar">
         <a className="brand" href="#overview" aria-label="Little Plot home">
           <span className="brand-mark"><Icon name="leaf" size={21} /></span>
@@ -157,14 +249,26 @@ function App() {
             </div>
           </motion.section>
 
+          <nav className="plant-tabs" aria-label="Choose a plant">
+            <span>GROWING NOW</span>
+            <a className={`plant-tab${!isTomato ? ' selected' : ''}`} href="?plant=eggplant" aria-current={!isTomato ? 'page' : undefined}>
+              <span className="plant-tab-dot eggplant-dot" /> Black Beauty
+              {!isTomato && <span className="plant-tab-current">CURRENT</span>}
+            </a>
+            <a className={`plant-tab${isTomato ? ' selected' : ''}`} href="?plant=tomato" aria-current={isTomato ? 'page' : undefined}>
+              <span className="plant-tab-dot tomato-dot" /> Sungold tomato
+              {isTomato && <span className="plant-tab-current">CURRENT</span>}
+            </a>
+          </nav>
+
           <motion.section className="hero-card" aria-labelledby="plant-title" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.08 }}>
             <div className="hero-copy">
-              <span className="stage-pill"><span /> IN THE GROUND FOR 42 DAYS</span>
-              <h2 id="plant-title">Meet your<br /><em>Black Beauty.</em></h2>
-              <p>Your eggplant is settling into its flowering stage. Those first blooms mean little fruits are just around the corner.</p>
+              <span className="stage-pill"><span /> IN THE GROUND FOR {plant.day} DAYS</span>
+              <h2 id="plant-title">Meet your<br /><em>{plant.variety}.</em></h2>
+              <p>{plant.summary}</p>
               <a className="text-link" href="#growth">Follow its growth <span>↗</span></a>
             </div>
-            <div className="hero-art"><EggplantIllustration /><span className="art-note"><span>✳</span> looking leafy</span></div>
+            <div className="hero-art">{isTomato ? <TomatoIllustration /> : <EggplantIllustration />}<span className="art-note"><span>✳</span> {plant.mood}</span></div>
             <div className="hero-index">01 <span>/</span> 03</div>
           </motion.section>
 
@@ -172,7 +276,7 @@ function App() {
             <motion.article className="stat-card" whileHover={{ y: -3 }} transition={{ duration: 0.18 }}>
               <span className="stat-icon stat-icon-green"><Icon name="plant" size={19} /></span>
               <span className="stat-label">GROWING FOR</span>
-              <strong>42 <small>days</small></strong>
+              <strong>{plant.day} <small>days</small></strong>
               <span className="stat-foot"><span className="tiny-dot green" /> Right on schedule</span>
             </motion.article>
             <motion.article className="stat-card" whileHover={{ y: -3 }} transition={{ duration: 0.18 }}>
@@ -184,7 +288,7 @@ function App() {
             <motion.article className="stat-card harvest-stat" whileHover={{ y: -3 }} transition={{ duration: 0.18 }}>
               <span className="stat-icon stat-icon-lilac"><Icon name="clock" size={19} /></span>
               <span className="stat-label">FIRST HARVEST</span>
-              <strong>~ 34 <small>days</small></strong>
+              <strong>~ {plant.harvestDays} <small>days</small></strong>
               <span className="stat-foot">A little more patience</span>
             </motion.article>
           </section>
@@ -196,11 +300,11 @@ function App() {
                 <button className="more-button" type="button" aria-label="More growth options">···</button>
               </div>
               <div className="growth-progress">
-                <div className="progress-caption"><span><strong>Day 42</strong> of about 90</span><span className="progress-percent">47% there</span></div>
-                <div className="progress-track"><motion.span initial={{ width: 0 }} animate={{ width: '47%' }} transition={{ duration: 1, delay: 0.45, ease: 'easeOut' }} /></div>
+                <div className="progress-caption"><span><strong>Day {plant.day}</strong> of about {plant.totalDays}</span><span className="progress-percent">{plant.progress}% there</span></div>
+                <div className="progress-track"><motion.span initial={{ width: 0 }} animate={{ width: `${plant.progress}%` }} transition={{ duration: 1, delay: 0.45, ease: 'easeOut' }} /></div>
               </div>
               <div className="timeline">
-                {stages.map((stage, index) => (
+                {plant.stages.map((stage, index) => (
                   <div className={`timeline-stage ${stage.state}`} key={stage.name}>
                     <div className="stage-marker">{stage.state === 'complete' ? <Icon name="check" size={13} strokeWidth={2.5} /> : stage.state === 'current' ? <span className="marker-center" /> : <span className="marker-number">{index + 1}</span>}</div>
                     <strong>{stage.name}</strong>
@@ -209,7 +313,7 @@ function App() {
                   </div>
                 ))}
               </div>
-              <div className="panel-footnote"><span className="footnote-spark">✳</span><span>Eggplants love a warm, sunny spot — <strong>6–8 hours of sun</strong> is their happy place.</span></div>
+              <div className="panel-footnote"><span className="footnote-spark">✳</span><span>{plant.sunNote}</span></div>
             </motion.section>
 
             <motion.section className="panel care-panel" id="care" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, delay: 0.22 }}>
@@ -236,26 +340,13 @@ function App() {
               <span className="guide-season"><Icon name="sun" size={15} /> Warmth is your friend</span>
             </div>
             <div className="guide-grid">
-              <article className="guide-card">
-                <span className="guide-number">01</span><span className="guide-icon seed-icon"><Icon name="leaf" size={17} /></span>
-                <h4>Start with warmth</h4><span className="guide-days">SOW · 10–14 WEEKS BEFORE LAST FROST</span>
-                <p>Sow seeds indoors in a warm, bright spot. They like it cozy — aim for soil around 24–29°C until the first leaves appear.</p>
-              </article>
-              <article className="guide-card">
-                <span className="guide-number">02</span><span className="guide-icon transplant-icon"><Icon name="plant" size={17} /></span>
-                <h4>Give them room to grow</h4><span className="guide-days">TRANSPLANT · AFTER NIGHTS WARM UP</span>
-                <p>Move sturdy seedlings outdoors once frost has passed. Leave about 45–60 cm between plants and choose your sunniest spot.</p>
-              </article>
-              <article className="guide-card guide-current">
-                <span className="guide-number">03</span><span className="guide-icon flower-icon">✳</span>
-                <h4>Flowers become fruit</h4><span className="guide-days">FLOWER & FRUIT · YOU ARE HERE</span>
-                <p>Keep soil evenly moist, water at the base, and support heavy stems. A gentle shake can help flowers pollinate.</p>
-              </article>
-              <article className="guide-card">
-                <span className="guide-number">04</span><span className="guide-icon harvest-icon">✂</span>
-                <h4>Pick while they shine</h4><span className="guide-days">HARVEST · OFTEN 65–90 DAYS AFTER TRANSPLANT</span>
-                <p>Harvest when the skin is glossy and the fruit feels firm. Snip the stem with pruners, leaving a little cap attached.</p>
-              </article>
+              {plant.guide.map((step, index) => (
+                <article className={`guide-card${step.current ? ' guide-current' : ''}`} key={step.title}>
+                  <span className="guide-number">0{index + 1}</span>
+                  <span className={`guide-icon ${step.icon}-icon`}>{step.icon === 'seed' ? <Icon name="leaf" size={17} /> : step.icon === 'transplant' ? <Icon name="plant" size={17} /> : step.icon === 'flower' ? '✳' : '✂'}</span>
+                  <h4>{step.title}</h4><span className="guide-days">{step.days}</span><p>{step.text}</p>
+                </article>
+              ))}
             </div>
           </motion.section>
 
