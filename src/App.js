@@ -126,7 +126,7 @@ const plants = {
   cucumber: {
     name: 'Cucumber',
     shortName: 'Cucumber',
-    variety: 'Poinsett 76',
+    variety: 'Green Gem',
     day: 32,
     totalDays: 60,
     progress: 53,

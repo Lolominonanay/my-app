@@ -93,7 +93,7 @@ test.each([
   },
   {
     slug: 'cucumber',
-    heading: /meet your poinsett 76/i,
+    heading: /meet your green gem/i,
     counter: 'Plant 05 of 05',
     image: /fresh cucumbers growing on a leafy vine/i,
     stage: 'Fruit set',
