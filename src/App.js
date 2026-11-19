@@ -372,9 +372,57 @@ function GardenIllustration({ plantSlug }) {
   );
 }
 
+function PlantCollection({ plantEntries }) {
+  return (
+    <motion.section className="plant-collection" aria-labelledby="plant-collection-title" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
+      <div className="plant-collection-heading">
+        <div>
+          <p className="eyebrow"><span className="eyebrow-dot" /> YOUR GARDEN AT A GLANCE</p>
+          <h1 id="plant-collection-title">My plants<span>.</span></h1>
+          <p className="welcome-copy">A little look at everything growing in your patch.</p>
+        </div>
+        <span className="plant-collection-count">{String(plantEntries.length).padStart(2, '0')} <small>plants</small></span>
+      </div>
+      <div className="plant-collection-grid">
+        {plantEntries.map(([slug, entry], index) => {
+          const currentStage = entry.stages.find((stage) => stage.state === 'current');
+
+          return (
+            <motion.a
+              className={`plant-collection-card ${slug}-collection-card`}
+              href={`?plant=${slug}`}
+              aria-label={`View ${entry.name}: ${entry.variety}, day ${entry.day}`}
+              key={slug}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.28, delay: index * 0.045 }}
+              whileHover={{ y: -3 }}
+            >
+              <div className="plant-card-art">
+                <GardenIllustration plantSlug={slug} />
+                <span className="plant-card-day">DAY {entry.day}</span>
+              </div>
+              <div className="plant-card-copy">
+                <div>
+                  <span className="plant-card-variety">{entry.variety}</span>
+                  <h2>{entry.shortName || entry.name}</h2>
+                </div>
+                <span className="plant-card-arrow" aria-hidden="true">↗</span>
+              </div>
+              <div className="plant-card-stage"><span className={`plant-tab-dot ${slug}-dot`} />{currentStage?.name || 'Getting started'}<span>Day {entry.day}</span></div>
+            </motion.a>
+          );
+        })}
+      </div>
+    </motion.section>
+  );
+}
+
 function App() {
+  const searchParams = new URLSearchParams(window.location.search);
   const plantEntries = Object.entries(plants);
-  const requestedPlant = new URLSearchParams(window.location.search).get('plant');
+  const requestedPlant = searchParams.get('plant');
+  const showPlantGrid = searchParams.get('view') === 'plants';
   const selectedPlant = Object.prototype.hasOwnProperty.call(plants, requestedPlant) ? requestedPlant : 'eggplant';
   const plant = plants[selectedPlant];
   const plantIndex = plantEntries.findIndex(([slug]) => slug === selectedPlant);
@@ -395,8 +443,8 @@ function App() {
   const completedTasks = tasks.filter((task) => task.done).length;
 
   useEffect(() => {
-    document.title = `Little Plot — ${plant.name} growing journal`;
-  }, [plant]);
+    document.title = showPlantGrid ? 'Little Plot — My plants' : `Little Plot — ${plant.name} growing journal`;
+  }, [plant, showPlantGrid]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -467,7 +515,7 @@ function App() {
     <MotionConfig reducedMotion="user">
     <div className={`app-shell ${selectedPlant}-theme`}>
       <aside className="sidebar">
-        <a className="brand" href="#overview" aria-label="Little Plot home">
+        <a className="brand" href={`?plant=${selectedPlant}`} aria-label="Little Plot home">
           <span className="brand-mark"><Icon name="leaf" size={21} /></span>
           <span className="brand-name">little plot<span>.</span></span>
         </a>
@@ -480,10 +528,10 @@ function App() {
 
         <p className="nav-caption">YOUR SPACE</p>
         <nav className="main-nav" aria-label="Main navigation">
-          <a className="nav-link active" href="#overview"><Icon name="overview" /><span>Overview</span></a>
-          <a className="nav-link" href="#growth"><Icon name="plant" /><span>My plants</span><span className="nav-count">{Object.keys(plants).length}</span></a>
+          <a className={`nav-link${!showPlantGrid ? ' active' : ''}`} href={`?plant=${selectedPlant}`} aria-current={!showPlantGrid ? 'page' : undefined}><Icon name="overview" /><span>Overview</span></a>
+          <a className={`nav-link${showPlantGrid ? ' active' : ''}`} href={`?view=plants&plant=${selectedPlant}`} aria-current={showPlantGrid ? 'page' : undefined}><Icon name="plant" /><span>My plants</span><span className="nav-count">{Object.keys(plants).length}</span></a>
           <button className="nav-link nav-button" type="button" onClick={() => setShowJournal(true)}><Icon name="journal" /><span>Garden journal</span></button>
-          <a className="nav-link" href="#care"><Icon name="calendar" /><span>Care calendar</span></a>
+          <a className="nav-link" href={showPlantGrid ? `?plant=${selectedPlant}#care` : '#care'}><Icon name="calendar" /><span>Care calendar</span></a>
         </nav>
 
         <div className="sidebar-tip">
@@ -501,7 +549,7 @@ function App() {
 
       <main className="main-content" id="overview">
         <header className="topbar">
-          <div className="breadcrumbs"><span>MY GARDEN</span><span className="crumb-slash">/</span><strong>OVERVIEW</strong></div>
+          <div className="breadcrumbs"><span>MY GARDEN</span><span className="crumb-slash">/</span><strong>{showPlantGrid ? 'MY PLANTS' : 'OVERVIEW'}</strong></div>
           <div className="topbar-actions">
             <button className="icon-button search-button" type="button" aria-label="Search"><Icon name="search" /></button>
             <button className="icon-button notification-button" type="button" aria-label="Notifications"><Icon name="bell" /><span /></button>
@@ -510,7 +558,11 @@ function App() {
           </div>
         </header>
 
-        <div className="dashboard">
+        <div className={`dashboard${showPlantGrid ? ' plants-dashboard' : ''}`}>
+          {showPlantGrid ? (
+            <PlantCollection plantEntries={plantEntries} />
+          ) : (
+            <>
           <motion.section className="welcome-row" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <div>
               <p className="eyebrow"><span className="eyebrow-dot" /> YOUR LITTLE PATCH OF GOOD</p>
@@ -670,6 +722,8 @@ function App() {
               </motion.section>
             )}
           </AnimatePresence>
+            </>
+          )}
 
           <footer className="page-footer"><span>Made for the joy of growing things</span><span>Take it one leaf at a time <span className="footer-heart">♥</span></span></footer>
         </div>

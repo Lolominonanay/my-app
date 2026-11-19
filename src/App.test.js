@@ -2,6 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import App from './App';
 
 beforeEach(() => {
+  window.history.replaceState({}, '', '/');
   global.fetch = jest.fn().mockResolvedValue({
     ok: true,
     json: jest.fn().mockResolvedValue({
@@ -34,6 +35,31 @@ test('shows a plant count matching the six available plants', () => {
 
   expect(screen.getByText('My plants').parentElement).toHaveTextContent('6');
   expect(screen.getByRole('navigation', { name: 'Choose a plant' }).querySelectorAll('a')).toHaveLength(3);
+});
+
+test('opens My plants as a grid of all six plants', async () => {
+  window.history.replaceState({}, '', '/?view=plants');
+  render(<App />);
+
+  expect(screen.getByRole('heading', { name: /my plants/i })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'My plants 6' })).toHaveAttribute('aria-current', 'page');
+  expect(screen.getByRole('link', { name: 'My plants 6' })).toHaveAttribute('href', '?view=plants&plant=eggplant');
+  expect(screen.getByRole('link', { name: 'Overview' })).not.toHaveAttribute('aria-current');
+
+  const cards = screen.getAllByRole('link', { name: /^View / });
+  expect(cards).toHaveLength(6);
+  expect(cards.map((card) => card.getAttribute('href'))).toEqual([
+    '?plant=eggplant',
+    '?plant=tomato',
+    '?plant=okra',
+    '?plant=kalabasa',
+    '?plant=cucumber',
+    '?plant=onion',
+  ]);
+  expect(screen.getAllByRole('img')).toHaveLength(6);
+  expect(screen.getAllByText('DAY 1')).toHaveLength(6);
+  expect(screen.getByRole('link', { name: 'View Onion: Ruby Ring, day 1' })).toBeInTheDocument();
+  expect(document.title).toBe('Little Plot — My plants');
 });
 
 test('shows an error and retry when the weather service is unavailable', async () => {
