@@ -192,6 +192,7 @@ a { color: inherit; }
 .plant-tab:hover, .plant-tab:focus-visible { border-color: #e8ebe4; background: #f4f6f0; color: #51694d; box-shadow: 0 3px 9px rgb(68 87 61 / 8%); outline: none; }
 .plant-tab:focus-visible { outline: 2px solid #91a985; outline-offset: 2px; }
 .plant-tab.selected { border-color: #e8ebe4; background: #fff; color: #51664e; font-weight: 600; }
+.plant-tab:hover, .plant-tab:focus-visible { animation: plant-bob 520ms ease-in-out; }
 .plant-tab-eggplant:hover, .plant-tab-eggplant:focus-visible { animation: plant-wiggle 520ms ease-in-out; }
 .plant-tab-tomato:hover, .plant-tab-tomato:focus-visible { animation: plant-bounce 480ms ease-out; }
 .plant-tab-okra:hover, .plant-tab-okra:focus-visible { animation: plant-rise 460ms ease-out; }
@@ -212,6 +213,11 @@ a { color: inherit; }
 @keyframes plant-rise {
   0%, 100% { transform: translateY(0); }
   45% { transform: translateY(-3px); }
+}
+@keyframes plant-bob {
+  0%, 100% { transform: translateY(0) scale(1); }
+  40% { transform: translateY(-3px) scale(1.025); }
+  70% { transform: translateY(1px) scale(1.01); }
 }
 @keyframes plant-sway {
   0%, 100% { transform: rotate(0); }
