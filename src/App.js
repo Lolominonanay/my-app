@@ -256,8 +256,8 @@ function App() {
         </a>
 
         <div className="garden-switcher">
-          <span className="garden-avatar">M</span>
-          <span className="garden-label"><strong>Maya’s garden</strong><small>Backyard · Zone 9b</small></span>
+          <span className="garden-avatar">J</span>
+          <span className="garden-label"><strong>Justin’s garden</strong><small>Backyard · Zone 9b</small></span>
           <span className="switcher-dots" aria-hidden="true">···</span>
         </div>
 
@@ -275,9 +275,9 @@ function App() {
           <span className="tip-sparkle">✳</span>
         </div>
 
-        <button className="profile-button" type="button" aria-label="Maya's profile">
-          <span className="profile-avatar">M</span>
-          <span className="profile-details"><strong>Maya Chen</strong><small>Garden beginner</small></span>
+        <button className="profile-button" type="button" aria-label="Justin's profile">
+          <span className="profile-avatar">J</span>
+          <span className="profile-details"><strong>Justin Arias</strong><small>Garden beginner</small></span>
           <span className="switcher-dots" aria-hidden="true">···</span>
         </button>
       </aside>

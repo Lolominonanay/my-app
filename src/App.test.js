@@ -21,6 +21,14 @@ test('shows Manila current weather and today’s forecast', async () => {
   expect(global.fetch.mock.calls[0][0]).toContain('timezone=Asia%2FManila');
 });
 
+test('shows Justin Arias consistently in the garden and profile', () => {
+  render(<App />);
+
+  expect(screen.getByText('Justin’s garden')).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: "Justin's profile" })).toHaveTextContent('Justin Arias');
+  expect(screen.queryByText(/Maya|Chen/i)).not.toBeInTheDocument();
+});
+
 test('shows an error and retry when the weather service is unavailable', async () => {
   global.fetch.mockRejectedValueOnce(new Error('Offline'));
   render(<App />);
