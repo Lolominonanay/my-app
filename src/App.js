@@ -175,7 +175,12 @@ function TomatoIllustration() {
 
 function App() {
   const isTomato = new URLSearchParams(window.location.search).get('plant') === 'tomato';
-  const plant = isTomato ? plants.tomato : plants.eggplant;
+  const plantEntries = Object.entries(plants);
+  const selectedPlant = isTomato ? 'tomato' : 'eggplant';
+  const plant = plants[selectedPlant];
+  const plantIndex = plantEntries.findIndex(([slug]) => slug === selectedPlant);
+  const plantNumber = String(plantIndex + 1).padStart(2, '0');
+  const plantCount = String(plantEntries.length).padStart(2, '0');
   const [tasks, setTasks] = useState(plant.tasks);
   const [note, setNote] = useState('');
   const [savedNote, setSavedNote] = useState('');
@@ -331,7 +336,7 @@ function App() {
               <a className="text-link" href="#growth">Follow its growth <span>↗</span></a>
             </div>
             <div className="hero-art">{isTomato ? <TomatoIllustration /> : <EggplantIllustration />}<span className="art-note"><span>✳</span> {plant.mood}</span></div>
-            <div className="hero-index">01 <span>/</span> 03</div>
+            <div className="hero-index" role="group" aria-label={`Plant ${plantNumber} of ${plantCount}`}>{plantNumber} <span>/</span> {plantCount}</div>
           </motion.section>
 
           <section className="stat-grid" aria-label="Plant health summary">

@@ -49,6 +49,7 @@ test('shows an error and retry when the weather service is unavailable', async (
 test('shows the eggplant dashboard and growing stages', async () => {
   render(<App />);
 
+  expect(screen.getByRole('group', { name: 'Plant 01 of 02' })).toHaveTextContent('01 / 02');
   expect(screen.getByRole('heading', { name: /growing something wonderful/i })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: /meet your black beauty/i })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: /your growing story/i })).toBeInTheDocument();
@@ -61,6 +62,7 @@ test('shows the tomato page with its own growth stages and care guide', async ()
   render(<App />);
 
   expect(screen.getByRole('heading', { name: /meet your sungold/i })).toBeInTheDocument();
+  expect(screen.getByRole('group', { name: 'Plant 02 of 02' })).toHaveTextContent('02 / 02');
   expect(screen.getByRole('img', { name: /ripe tomatoes growing on a leafy vine/i })).toBeInTheDocument();
   expect(screen.getByText('Fruit set')).toBeInTheDocument();
   expect(screen.getByText('Water deeply at the base')).toBeInTheDocument();
