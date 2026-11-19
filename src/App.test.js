@@ -29,6 +29,13 @@ test('shows Justin Arias consistently in the garden and profile', () => {
   expect(screen.queryByText(/Maya|Chen/i)).not.toBeInTheDocument();
 });
 
+test('shows a plant count matching the two available plants', () => {
+  render(<App />);
+
+  expect(screen.getByText('My plants').parentElement).toHaveTextContent('2');
+  expect(screen.getByText('My plants').parentElement).not.toHaveTextContent('3');
+});
+
 test('shows an error and retry when the weather service is unavailable', async () => {
   global.fetch.mockRejectedValueOnce(new Error('Offline'));
   render(<App />);

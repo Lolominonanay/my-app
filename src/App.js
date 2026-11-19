@@ -264,7 +264,7 @@ function App() {
         <p className="nav-caption">YOUR SPACE</p>
         <nav className="main-nav" aria-label="Main navigation">
           <a className="nav-link active" href="#overview"><Icon name="overview" /><span>Overview</span></a>
-          <a className="nav-link" href="#growth"><Icon name="plant" /><span>My plants</span><span className="nav-count">3</span></a>
+          <a className="nav-link" href="#growth"><Icon name="plant" /><span>My plants</span><span className="nav-count">{Object.keys(plants).length}</span></a>
           <button className="nav-link nav-button" type="button" onClick={() => setShowJournal(true)}><Icon name="journal" /><span>Garden journal</span></button>
           <a className="nav-link" href="#care"><Icon name="calendar" /><span>Care calendar</span></a>
         </nav>
