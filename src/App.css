@@ -188,9 +188,37 @@ a { color: inherit; }
 .plant-tabs-browser { display: flex; min-width: 0; flex: 1; align-items: center; gap: 9px; }
 .plant-tab-window { min-width: 0; flex: 1; overflow: hidden; }
 .plant-tab-track { display: flex; width: max-content; align-items: center; gap: 7px; }
-.plant-tab { display: inline-flex; min-height: 30px; flex: 0 0 auto; align-items: center; gap: 6px; padding: 0 9px; border: 1px solid transparent; border-radius: 9px; color: #8e958b; font-size: 9px; text-decoration: none; white-space: nowrap; transition: background .2s ease, color .2s ease, border-color .2s ease; }
-.plant-tab:hover { background: #f4f6f0; color: #51694d; }
+.plant-tab { display: inline-flex; min-height: 30px; flex: 0 0 auto; align-items: center; gap: 6px; padding: 0 9px; border: 1px solid transparent; border-radius: 9px; color: #8e958b; font-size: 9px; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.plant-tab:hover, .plant-tab:focus-visible { border-color: #e8ebe4; background: #f4f6f0; color: #51694d; box-shadow: 0 3px 9px rgb(68 87 61 / 8%); outline: none; }
+.plant-tab:focus-visible { outline: 2px solid #91a985; outline-offset: 2px; }
 .plant-tab.selected { border-color: #e8ebe4; background: #fff; color: #51664e; font-weight: 600; }
+.plant-tab-eggplant:hover, .plant-tab-eggplant:focus-visible { animation: plant-wiggle 520ms ease-in-out; }
+.plant-tab-tomato:hover, .plant-tab-tomato:focus-visible { animation: plant-bounce 480ms ease-out; }
+.plant-tab-okra:hover, .plant-tab-okra:focus-visible { animation: plant-rise 460ms ease-out; }
+.plant-tab-kalabasa:hover, .plant-tab-kalabasa:focus-visible { animation: plant-wiggle 620ms ease-in-out; }
+.plant-tab-cucumber:hover, .plant-tab-cucumber:focus-visible { animation: plant-sway 620ms ease-in-out; }
+.plant-tab-onion:hover, .plant-tab-onion:focus-visible { animation: plant-bounce 560ms ease-out; }
+@keyframes plant-wiggle {
+  0%, 100% { transform: rotate(0); }
+  22% { transform: rotate(-3deg) translateY(-1px); }
+  48% { transform: rotate(3deg); }
+  72% { transform: rotate(-1.5deg) translateY(-1px); }
+}
+@keyframes plant-bounce {
+  0%, 100% { transform: translateY(0); }
+  38% { transform: translateY(-3px); }
+  68% { transform: translateY(1px); }
+}
+@keyframes plant-rise {
+  0%, 100% { transform: translateY(0); }
+  45% { transform: translateY(-3px); }
+}
+@keyframes plant-sway {
+  0%, 100% { transform: rotate(0); }
+  28% { transform: rotate(2deg) translateY(-1px); }
+  58% { transform: rotate(-2deg); }
+  82% { transform: rotate(1deg); }
+}
 .plant-tab-dot { width: 7px; height: 7px; border-radius: 50%; }
 .eggplant-dot { background: #73548d; }
 .tomato-dot { background: #cf6045; }
@@ -501,7 +529,7 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 @media (max-width: 380px) {
-  .dashboard { padding-right: 12px; padding-left: 12px; }
+  .dashboard { padding-right: 12px; padding-left: 12px;   }
   .topbar { padding-right: 12px; padding-left: 12px; }
   .welcome-row { flex-wrap: wrap; }
   .plant-tab { gap: 3px; padding-right: 3px; padding-left: 3px; }

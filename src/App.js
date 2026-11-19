@@ -543,7 +543,7 @@ function App() {
                   >
                     {plantEntries.slice(plantTabsStart, plantTabsEnd).map(([slug, entry]) => (
                       <a
-                        className={`plant-tab${selectedPlant === slug ? ' selected' : ''}`}
+                        className={`plant-tab plant-tab-${slug}${selectedPlant === slug ? ' selected' : ''}`}
                         href={`?plant=${slug}`}
                         aria-label={`${entry.variety} ${entry.name}${selectedPlant === slug ? ' current' : ''}`}
                         aria-current={selectedPlant === slug ? 'page' : undefined}

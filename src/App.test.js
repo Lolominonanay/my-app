@@ -51,6 +51,7 @@ test('shows the eggplant dashboard and growing stages', async () => {
 
   expect(screen.getByRole('group', { name: 'Plant 01 of 06' })).toHaveTextContent('01 / 06');
   expect(document.querySelector('.progress-caption')).toHaveTextContent('Day 1 of about 90');
+  expect(screen.getByRole('link', { name: /black beauty eggplant current/i })).toHaveClass('plant-tab-eggplant');
   expect(screen.getByText('1% there')).toBeInTheDocument();
   expect(screen.getByText('IN THE GROUND FOR 1 DAY')).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: /growing something wonderful/i })).toBeInTheDocument();
@@ -67,6 +68,7 @@ test('shows the tomato page with its own growth stages and care guide', async ()
   expect(screen.getByRole('heading', { name: /meet your sungold/i })).toBeInTheDocument();
   expect(screen.getByRole('group', { name: 'Plant 02 of 06' })).toHaveTextContent('02 / 06');
   expect(document.querySelector('.progress-caption')).toHaveTextContent('Day 1 of about 85');
+  expect(screen.getByRole('link', { name: /sungold tomato current/i })).toHaveClass('plant-tab-tomato');
   expect(screen.getByText('1% there')).toBeInTheDocument();
   expect(screen.getByRole('img', { name: /ripe tomatoes growing on a leafy vine/i })).toBeInTheDocument();
   expect(screen.getByText('Fruit set')).toBeInTheDocument();
@@ -83,6 +85,8 @@ test.each([
     heading: /meet your clemson spineless/i,
     counter: 'Plant 03 of 06',
     totalDays: 60,
+    tabClass: 'plant-tab-okra',
+    tabName: /clemson spineless okra/i,
     image: /okra pods growing on a leafy plant/i,
     stage: 'Young pods',
     task: 'Look for tender new pods',
@@ -93,6 +97,8 @@ test.each([
     heading: /meet your philippine kalabasa/i,
     counter: 'Plant 04 of 06',
     totalDays: 110,
+    tabClass: 'plant-tab-kalabasa',
+    tabName: /philippine kalabasa squash/i,
     image: /ripe kalabasa squash growing on a vine/i,
     stage: 'Flowers open',
     task: 'Look for fresh yellow flowers',
@@ -103,17 +109,20 @@ test.each([
     heading: /meet your green gem/i,
     counter: 'Plant 05 of 06',
     totalDays: 60,
+    tabClass: 'plant-tab-cucumber',
+    tabName: /green gem cucumber/i,
     image: /fresh cucumbers growing on a leafy vine/i,
     stage: 'Fruit set',
     task: 'Check the vine supports',
     guide: 'Pick before seeds enlarge',
   },
-])('shows the $slug dashboard with its own guide and plant number', async ({ slug, heading, counter, totalDays, image, stage, task, guide }) => {
+])('shows the $slug dashboard with its own guide and plant number', async ({ slug, heading, counter, totalDays, tabClass, tabName, image, stage, task, guide }) => {
   window.history.replaceState({}, '', `/?plant=${slug}`);
   render(<App />);
 
   expect(screen.getByRole('heading', { name: heading })).toBeInTheDocument();
   expect(screen.getByRole('group', { name: counter })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: tabName })).toHaveClass(tabClass);
   expect(document.querySelector('.progress-caption')).toHaveTextContent(`Day 1 of about ${totalDays}`);
   expect(screen.getByText('1% there')).toBeInTheDocument();
   expect(screen.getByText('IN THE GROUND FOR 1 DAY')).toBeInTheDocument();
@@ -133,6 +142,9 @@ test('shows only three plants at a time and slides to the next plants', async ()
   expect(plantNavigation.querySelectorAll('a')).toHaveLength(3);
   expect(screen.getByRole('link', { name: /black beauty eggplant current/i })).toBeInTheDocument();
   expect(screen.getByRole('link', { name: /clemson spineless okra/i })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /black beauty eggplant current/i })).toHaveClass('plant-tab-eggplant');
+  expect(screen.getByRole('link', { name: /sungold tomato/i })).toHaveClass('plant-tab-tomato');
+  expect(screen.getByRole('link', { name: /clemson spineless okra/i })).toHaveClass('plant-tab-okra');
   expect(screen.queryByRole('link', { name: /kalabasa/i })).not.toBeInTheDocument();
   expect(screen.getByLabelText('Showing plants 1 to 3 of 6')).toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Previous plants' })).toBeDisabled();
@@ -141,6 +153,7 @@ test('shows only three plants at a time and slides to the next plants', async ()
 
   expect(await screen.findByRole('link', { name: /philippine kalabasa squash/i })).toBeInTheDocument();
   await waitFor(() => expect(plantNavigation.querySelectorAll('a')).toHaveLength(3));
+  expect(screen.getByRole('link', { name: /philippine kalabasa squash/i })).toHaveClass('plant-tab-kalabasa');
   expect(screen.queryByRole('link', { name: /black beauty eggplant/i })).not.toBeInTheDocument();
   expect(screen.getByLabelText('Showing plants 2 to 4 of 6')).toBeInTheDocument();
 
@@ -163,6 +176,7 @@ test('shows the onion dashboard at Day 1 with its own guide and plant number', a
   expect(screen.getByText('Keep the seed bed lightly moist')).toBeInTheDocument();
   expect(screen.getByText('Sow seeds in a fine bed')).toBeInTheDocument();
   expect(screen.getByRole('link', { name: /ruby ring onion current/i })).toHaveAttribute('aria-current', 'page');
+  expect(screen.getByRole('link', { name: /ruby ring onion current/i })).toHaveClass('plant-tab-onion');
   expect(screen.getByRole('navigation', { name: 'Choose a plant' }).querySelectorAll('a')).toHaveLength(3);
   expect(await screen.findByText(/H 35° L 27°/)).toBeInTheDocument();
 });
