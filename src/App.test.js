@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import App from './App';
 
 beforeEach(() => {
@@ -33,7 +33,7 @@ test('shows a plant count matching the six available plants', () => {
   render(<App />);
 
   expect(screen.getByText('My plants').parentElement).toHaveTextContent('6');
-  expect(screen.getByRole('navigation', { name: 'Choose a plant' }).querySelectorAll('a')).toHaveLength(6);
+  expect(screen.getByRole('navigation', { name: 'Choose a plant' }).querySelectorAll('a')).toHaveLength(3);
 });
 
 test('shows an error and retry when the weather service is unavailable', async () => {
@@ -121,8 +121,32 @@ test.each([
   expect(screen.getByText(stage)).toBeInTheDocument();
   expect(screen.getByText(task)).toBeInTheDocument();
   expect(screen.getByText(guide)).toBeInTheDocument();
-  expect(screen.getByRole('navigation', { name: 'Choose a plant' }).querySelectorAll('a')).toHaveLength(6);
+  expect(screen.getByRole('navigation', { name: 'Choose a plant' }).querySelectorAll('a')).toHaveLength(3);
   expect(await screen.findByText(/H 35° L 27°/)).toBeInTheDocument();
+});
+
+test('shows only three plants at a time and slides to the next plants', async () => {
+  window.history.replaceState({}, '', '/');
+  render(<App />);
+
+  const plantNavigation = screen.getByRole('navigation', { name: 'Choose a plant' });
+  expect(plantNavigation.querySelectorAll('a')).toHaveLength(3);
+  expect(screen.getByRole('link', { name: /black beauty eggplant current/i })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /clemson spineless okra/i })).toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: /kalabasa/i })).not.toBeInTheDocument();
+  expect(screen.getByLabelText('Showing plants 1 to 3 of 6')).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Previous plants' })).toBeDisabled();
+
+  fireEvent.click(screen.getByRole('button', { name: 'Next plants' }));
+
+  expect(await screen.findByRole('link', { name: /philippine kalabasa squash/i })).toBeInTheDocument();
+  await waitFor(() => expect(plantNavigation.querySelectorAll('a')).toHaveLength(3));
+  expect(screen.queryByRole('link', { name: /black beauty eggplant/i })).not.toBeInTheDocument();
+  expect(screen.getByLabelText('Showing plants 2 to 4 of 6')).toBeInTheDocument();
+
+  fireEvent.click(screen.getByRole('button', { name: 'Previous plants' }));
+  expect(await screen.findByRole('link', { name: /black beauty eggplant current/i })).toBeInTheDocument();
+  expect(screen.getByLabelText('Showing plants 1 to 3 of 6')).toBeInTheDocument();
 });
 
 test('shows the onion dashboard at Day 1 with its own guide and plant number', async () => {
@@ -139,7 +163,7 @@ test('shows the onion dashboard at Day 1 with its own guide and plant number', a
   expect(screen.getByText('Keep the seed bed lightly moist')).toBeInTheDocument();
   expect(screen.getByText('Sow seeds in a fine bed')).toBeInTheDocument();
   expect(screen.getByRole('link', { name: /ruby ring onion current/i })).toHaveAttribute('aria-current', 'page');
-  expect(screen.getByRole('navigation', { name: 'Choose a plant' }).querySelectorAll('a')).toHaveLength(6);
+  expect(screen.getByRole('navigation', { name: 'Choose a plant' }).querySelectorAll('a')).toHaveLength(3);
   expect(await screen.findByText(/H 35° L 27°/)).toBeInTheDocument();
 });
 

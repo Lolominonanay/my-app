@@ -183,9 +183,12 @@ a { color: inherit; }
 
 .dashboard { width: min(100%, 1190px); margin: 0 auto; padding: 32px 48px 25px; }
 .welcome-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 25px; margin-bottom: 22px; }
-.plant-tabs { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 7px; margin: -7px 0 15px; }
-.plant-tabs > span { margin-right: 5px; color: #a0a69c; font-size: 8px; font-weight: 700; letter-spacing: 1px; }
-.plant-tab { display: inline-flex; min-height: 27px; align-items: center; gap: 6px; padding: 0 9px; border: 1px solid transparent; border-radius: 8px; color: #8e958b; font-size: 9px; text-decoration: none; transition: background .2s ease, color .2s ease, border-color .2s ease; }
+.plant-tabs { display: flex; align-items: center; gap: 15px; margin: -7px 0 15px; }
+.plant-tabs-label { flex: 0 0 auto; color: #a0a69c; font-size: 8px; font-weight: 700; letter-spacing: 1px; }
+.plant-tabs-browser { display: flex; min-width: 0; flex: 1; align-items: center; gap: 9px; }
+.plant-tab-window { min-width: 0; flex: 1; overflow: hidden; }
+.plant-tab-track { display: flex; width: max-content; align-items: center; gap: 7px; }
+.plant-tab { display: inline-flex; min-height: 30px; flex: 0 0 auto; align-items: center; gap: 6px; padding: 0 9px; border: 1px solid transparent; border-radius: 9px; color: #8e958b; font-size: 9px; text-decoration: none; white-space: nowrap; transition: background .2s ease, color .2s ease, border-color .2s ease; }
 .plant-tab:hover { background: #f4f6f0; color: #51694d; }
 .plant-tab.selected { border-color: #e8ebe4; background: #fff; color: #51664e; font-weight: 600; }
 .plant-tab-dot { width: 7px; height: 7px; border-radius: 50%; }
@@ -196,6 +199,14 @@ a { color: inherit; }
 .cucumber-dot { background: #4b8567; }
 .onion-dot { background: #ad6574; }
 .plant-tab-current { margin-left: 3px; color: #9aa493; font-size: 6px; font-weight: 700; letter-spacing: .5px; }
+.plant-tab-controls { display: flex; flex: 0 0 auto; align-items: center; gap: 3px; padding: 2px; border: 1px solid #e9ece5; border-radius: 10px; background: rgb(255 255 255 / 76%); }
+.plant-tab-range { min-width: 45px; padding: 0 4px; color: #64745f; font-size: 8px; font-weight: 700; text-align: center; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.plant-tab-range > span { color: #a6ada2; font-weight: 500; }
+.plant-tab-arrow { display: grid; width: 25px; height: 25px; place-items: center; padding: 0; border: 0; border-radius: 7px; background: transparent; color: #64745f; cursor: pointer; transition: background .18s ease, color .18s ease, opacity .18s ease; }
+.plant-tab-arrow:hover:not(:disabled) { background: #eff3ea; color: #425f43; }
+.plant-tab-arrow:focus-visible { outline: 2px solid #91a985; outline-offset: 1px; }
+.plant-tab-arrow:disabled { color: #c5cbc1; cursor: default; }
+.plant-tab-arrow svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .eyebrow { display: flex; align-items: center; gap: 7px; margin: 0 0 12px; color: #8c9786; font-size: 9px; }
 .eyebrow-dot, .stage-pill > span { width: 6px; height: 6px; border-radius: 50%; background: #87a474; }
 h1, h2, h3, p { margin-top: 0; }
@@ -432,10 +443,14 @@ h1, h2, h3, p { margin-top: 0; }
   .search-button { display: none; }
   .dashboard { padding: 25px 17px 19px; }
   .welcome-row { align-items: flex-start; gap: 12px; margin-bottom: 17px; }
-  .plant-tabs { gap: 4px; margin: -5px 0 12px; }
-  .plant-tabs > span { width: 100%; margin: 0 0 1px; }
-  .plant-tab { min-height: 27px; padding: 0 7px; font-size: 8px; }
-  .plant-tab-current { font-size: 5px; }
+  .plant-tabs { flex-wrap: wrap; gap: 6px; margin: -5px 0 12px; }
+  .plant-tabs-label { width: 100%; }
+  .plant-tabs-browser { width: 100%; flex: 1 1 100%; gap: 6px; }
+  .plant-tab-track { width: 100%; gap: 4px; }
+  .plant-tab { min-width: 0; min-height: 29px; flex: 1 1 0; justify-content: center; gap: 4px; overflow: hidden; padding: 0 5px; font-size: 8px; text-overflow: ellipsis; }
+  .plant-tab-current, .plant-tab-range { display: none; }
+  .plant-tab-controls { gap: 1px; }
+  .plant-tab-arrow { width: 24px; height: 25px; }
   .welcome-row h1 { font-size: clamp(30px, 8vw, 38px); }
   .welcome-copy { max-width: 250px; font-size: 10px; line-height: 1.55; }
   .weather-card { display: grid; flex: 0 0 auto; grid-template-columns: 32px minmax(0, 1fr); grid-template-rows: auto auto; gap: 1px 7px; align-items: center; padding: 7px; }
@@ -489,7 +504,7 @@ h1, h2, h3, p { margin-top: 0; }
   .dashboard { padding-right: 12px; padding-left: 12px; }
   .topbar { padding-right: 12px; padding-left: 12px; }
   .welcome-row { flex-wrap: wrap; }
-  .plant-tab { gap: 4px; padding-right: 6px; padding-left: 6px; }
+  .plant-tab { gap: 3px; padding-right: 3px; padding-left: 3px; }
   .weather-card { padding: 6px; }
   .timeline-stage > strong { font-size: 6px; }
   .timeline-stage > span { font-size: 6px; }

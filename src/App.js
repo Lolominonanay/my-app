@@ -380,6 +380,10 @@ function App() {
   const plantIndex = plantEntries.findIndex(([slug]) => slug === selectedPlant);
   const plantNumber = String(plantIndex + 1).padStart(2, '0');
   const plantCount = String(plantEntries.length).padStart(2, '0');
+  const visiblePlantCount = Math.min(3, plantEntries.length);
+  const [plantTabsStart, setPlantTabsStart] = useState(() => Math.min(plantIndex, plantEntries.length - visiblePlantCount));
+  const [plantTabsDirection, setPlantTabsDirection] = useState(1);
+  const plantTabsEnd = Math.min(plantTabsStart + visiblePlantCount, plantEntries.length);
   const dayUnit = plant.day === 1 ? 'day' : 'days';
   const [tasks, setTasks] = useState(plant.tasks);
   const [note, setNote] = useState('');
@@ -451,6 +455,14 @@ function App() {
     setShowJournal(false);
   };
 
+  const movePlantTabs = (direction) => {
+    setPlantTabsDirection(direction);
+    setPlantTabsStart((currentStart) => Math.max(
+      0,
+      Math.min(currentStart + direction, plantEntries.length - visiblePlantCount),
+    ));
+  };
+
   return (
     <MotionConfig reducedMotion="user">
     <div className={`app-shell ${selectedPlant}-theme`}>
@@ -517,19 +529,47 @@ function App() {
           </motion.section>
 
           <nav className="plant-tabs" aria-label="Choose a plant">
-            <span>GROWING NOW</span>
-            {plantEntries.map(([slug, entry]) => (
-              <a
-                className={`plant-tab${selectedPlant === slug ? ' selected' : ''}`}
-                href={`?plant=${slug}`}
-                aria-label={`${entry.variety} ${entry.name}${selectedPlant === slug ? ' current' : ''}`}
-                aria-current={selectedPlant === slug ? 'page' : undefined}
-                key={slug}
-              >
-                <span className={`plant-tab-dot ${slug}-dot`} /> {entry.shortName || entry.variety}
-                {selectedPlant === slug && <span className="plant-tab-current">CURRENT</span>}
-              </a>
-            ))}
+            <span className="plant-tabs-label">GROWING NOW</span>
+            <div className="plant-tabs-browser">
+              <div className="plant-tab-window">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    className="plant-tab-track"
+                    key={plantTabsStart}
+                    initial={{ opacity: 0, x: plantTabsDirection * 12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: plantTabsDirection * -12 }}
+                    transition={{ duration: 0.18 }}
+                  >
+                    {plantEntries.slice(plantTabsStart, plantTabsEnd).map(([slug, entry]) => (
+                      <a
+                        className={`plant-tab${selectedPlant === slug ? ' selected' : ''}`}
+                        href={`?plant=${slug}`}
+                        aria-label={`${entry.variety} ${entry.name}${selectedPlant === slug ? ' current' : ''}`}
+                        aria-current={selectedPlant === slug ? 'page' : undefined}
+                        key={slug}
+                      >
+                        <span className={`plant-tab-dot ${slug}-dot`} /> {entry.shortName || entry.variety}
+                        {selectedPlant === slug && <span className="plant-tab-current">CURRENT</span>}
+                      </a>
+                    ))}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+              {plantEntries.length > visiblePlantCount && (
+                <div className="plant-tab-controls">
+                  <span className="plant-tab-range" aria-live="polite" aria-label={`Showing plants ${plantTabsStart + 1} to ${plantTabsEnd} of ${plantEntries.length}`}>
+                    {String(plantTabsStart + 1).padStart(2, '0')}–{String(plantTabsEnd).padStart(2, '0')} <span>/ {plantCount}</span>
+                  </span>
+                  <button className="plant-tab-arrow" type="button" aria-label="Previous plants" onClick={() => movePlantTabs(-1)} disabled={plantTabsStart === 0}>
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 3-5 5 5 5" /></svg>
+                  </button>
+                  <button className="plant-tab-arrow" type="button" aria-label="Next plants" onClick={() => movePlantTabs(1)} disabled={plantTabsEnd === plantEntries.length}>
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" /></svg>
+                  </button>
+                </div>
+              )}
+            </div>
           </nav>
 
           <motion.section className="hero-card" aria-labelledby="plant-title" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.08 }}>
