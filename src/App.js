@@ -153,6 +153,36 @@ const plants = {
       { title: 'Pick before seeds enlarge', days: 'HARVEST · CHECK VINES EVERY DAY', text: 'Pick when fruits are firm, evenly colored, and the right size for their variety. Frequent harvesting encourages more cucumbers.', icon: 'harvest' },
     ],
   },
+  onion: {
+    name: 'Onion',
+    shortName: 'Onion',
+    variety: 'Ruby Ring',
+    day: 1,
+    totalDays: 110,
+    progress: 1,
+    harvestDays: 109,
+    summary: 'Your Ruby Ring onion journey begins today. Sow seeds in a bright spot and keep the soil gently moist as the first green shoots emerge.',
+    mood: 'starting small',
+    stages: [
+      { name: 'Seeds settle in', range: 'Days 1–14', state: 'current' },
+      { name: 'Green tops grow', range: 'Days 15–35', state: 'upcoming' },
+      { name: 'Bulbs begin to swell', range: 'Days 36–75', state: 'upcoming' },
+      { name: 'Tops start to fall', range: 'Days 76–95', state: 'upcoming' },
+      { name: 'Cure and store', range: 'Days 96–110', state: 'upcoming' },
+    ],
+    tasks: [
+      { id: 1, title: 'Keep the seed bed lightly moist', detail: 'Water gently so tiny seeds stay in place', done: false },
+      { id: 2, title: 'Give the seedlings a sunny spot', detail: 'Onions grow best with plenty of light', done: false },
+      { id: 3, title: 'Clear small weeds nearby', detail: 'Onions do not like competing for space', done: true },
+    ],
+    sunNote: <>Onions prefer a sunny, open bed — give them <strong>6–8 hours of light</strong> and loose soil that drains well.</>,
+    guide: [
+      { title: 'Sow seeds in a fine bed', days: 'SOW · COOL, SUNNY START', text: 'Scatter seeds thinly in shallow rows and cover lightly with fine soil. Keep the bed evenly moist while the first shoots appear.', icon: 'seed', current: true },
+      { title: 'Thin and keep them growing', days: 'THIN · AFTER SEEDLINGS EMERGE', text: 'Give seedlings space to grow without crowding, remove weeds carefully, and water at soil level when the bed begins to dry.', icon: 'transplant' },
+      { title: 'Let the bulbs swell', days: 'BULB FORMATION', text: 'Keep moisture steady as the bulbs develop. Avoid piling soil over the bulb shoulders so they can mature in the open air.', icon: 'flower' },
+      { title: 'Harvest and cure', days: 'HARVEST · WHEN MOST TOPS FALL OVER', text: 'Lift bulbs once most tops have bent and dried. Cure them in a warm, airy, shaded place until the outer skins are papery.', icon: 'harvest' },
+    ],
+  },
 };
 
 function Icon({ name, size = 20, strokeWidth = 1.8 }) {
@@ -300,6 +330,18 @@ function GardenIllustration({ plantSlug }) {
           <path d="M274 166c9 12 12 29 10 48l-8 80c-2 13-5 22-10 28-8-10-10-24-8-42l8-77c1-18 4-30 8-37Z" fill="#79A36A" opacity=".85" transform="rotate(18 278 240)" />
           <path d="M265 191c-2 6-3 12-3 18m0 12c-1 6-2 12-2 18m-1 13c-1 6-1 12-1 17m60-77c2 6 3 12 3 18m1 12c1 6 2 12 2 18m0 13c1 6 1 12 1 17" stroke="#B5C890" strokeWidth="2" strokeLinecap="round" transform="rotate(18 278 240)" />
           <path d="M293 161c-8-7-10-14-6-23 7 7 14 9 22 7-5 7-6 15-2 23-7-4-14-5-21-2 2-4 4-6 7-5Z" fill="#607C4F" />
+        </>
+      ),
+    },
+    onion: {
+      label: 'Illustration of a red onion growing beneath green leaves',
+      produce: (
+        <>
+          <path d="M288 187c-29 17-49 43-48 74 1 32 21 49 48 49s47-17 48-49c1-31-19-57-48-74Z" fill="#B96778" />
+          <path d="M288 196c-18 17-30 39-30 63 0 18 7 32 18 41-18-5-29-20-29-42 0-28 17-53 41-69Z" fill="#D58B92" opacity=".8" />
+          <path d="M288 188c-5-13-3-26 5-38m-4 38c10-11 20-16 32-16m-34 16c-13-12-25-16-38-12" stroke="#698B5E" strokeWidth="5" strokeLinecap="round" />
+          <path d="M288 197v102m-15-93c-2 23 0 54 7 87m23-89c4 26 3 55-4 83" stroke="#E8B4AC" strokeWidth="2" opacity=".8" />
+          <path d="M278 310c6 4 14 4 20 0m-16-2 2 7m8-7-2 7" stroke="#A98768" strokeWidth="2" strokeLinecap="round" />
         </>
       ),
     },

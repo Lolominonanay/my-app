@@ -29,11 +29,11 @@ test('shows Justin Arias consistently in the garden and profile', () => {
   expect(screen.queryByText(/Maya|Chen/i)).not.toBeInTheDocument();
 });
 
-test('shows a plant count matching the five available plants', () => {
+test('shows a plant count matching the six available plants', () => {
   render(<App />);
 
-  expect(screen.getByText('My plants').parentElement).toHaveTextContent('5');
-  expect(screen.getByRole('navigation', { name: 'Choose a plant' }).querySelectorAll('a')).toHaveLength(5);
+  expect(screen.getByText('My plants').parentElement).toHaveTextContent('6');
+  expect(screen.getByRole('navigation', { name: 'Choose a plant' }).querySelectorAll('a')).toHaveLength(6);
 });
 
 test('shows an error and retry when the weather service is unavailable', async () => {
@@ -49,7 +49,7 @@ test('shows an error and retry when the weather service is unavailable', async (
 test('shows the eggplant dashboard and growing stages', async () => {
   render(<App />);
 
-  expect(screen.getByRole('group', { name: 'Plant 01 of 05' })).toHaveTextContent('01 / 05');
+  expect(screen.getByRole('group', { name: 'Plant 01 of 06' })).toHaveTextContent('01 / 06');
   expect(document.querySelector('.progress-caption')).toHaveTextContent('Day 1 of about 90');
   expect(screen.getByText('1% there')).toBeInTheDocument();
   expect(screen.getByText('IN THE GROUND FOR 1 DAY')).toBeInTheDocument();
@@ -65,7 +65,7 @@ test('shows the tomato page with its own growth stages and care guide', async ()
   render(<App />);
 
   expect(screen.getByRole('heading', { name: /meet your sungold/i })).toBeInTheDocument();
-  expect(screen.getByRole('group', { name: 'Plant 02 of 05' })).toHaveTextContent('02 / 05');
+  expect(screen.getByRole('group', { name: 'Plant 02 of 06' })).toHaveTextContent('02 / 06');
   expect(document.querySelector('.progress-caption')).toHaveTextContent('Day 1 of about 85');
   expect(screen.getByText('1% there')).toBeInTheDocument();
   expect(screen.getByRole('img', { name: /ripe tomatoes growing on a leafy vine/i })).toBeInTheDocument();
@@ -81,7 +81,7 @@ test.each([
   {
     slug: 'okra',
     heading: /meet your clemson spineless/i,
-    counter: 'Plant 03 of 05',
+    counter: 'Plant 03 of 06',
     totalDays: 60,
     image: /okra pods growing on a leafy plant/i,
     stage: 'Young pods',
@@ -91,7 +91,7 @@ test.each([
   {
     slug: 'kalabasa',
     heading: /meet your philippine kalabasa/i,
-    counter: 'Plant 04 of 05',
+    counter: 'Plant 04 of 06',
     totalDays: 110,
     image: /ripe kalabasa squash growing on a vine/i,
     stage: 'Flowers open',
@@ -101,7 +101,7 @@ test.each([
   {
     slug: 'cucumber',
     heading: /meet your green gem/i,
-    counter: 'Plant 05 of 05',
+    counter: 'Plant 05 of 06',
     totalDays: 60,
     image: /fresh cucumbers growing on a leafy vine/i,
     stage: 'Fruit set',
@@ -121,7 +121,25 @@ test.each([
   expect(screen.getByText(stage)).toBeInTheDocument();
   expect(screen.getByText(task)).toBeInTheDocument();
   expect(screen.getByText(guide)).toBeInTheDocument();
-  expect(screen.getByRole('navigation', { name: 'Choose a plant' }).querySelectorAll('a')).toHaveLength(5);
+  expect(screen.getByRole('navigation', { name: 'Choose a plant' }).querySelectorAll('a')).toHaveLength(6);
+  expect(await screen.findByText(/H 35° L 27°/)).toBeInTheDocument();
+});
+
+test('shows the onion dashboard at Day 1 with its own guide and plant number', async () => {
+  window.history.replaceState({}, '', '/?plant=onion');
+  render(<App />);
+
+  expect(screen.getByRole('heading', { name: /meet your ruby ring/i })).toBeInTheDocument();
+  expect(screen.getByRole('group', { name: 'Plant 06 of 06' })).toHaveTextContent('06 / 06');
+  expect(document.querySelector('.progress-caption')).toHaveTextContent('Day 1 of about 110');
+  expect(screen.getByText('1% there')).toBeInTheDocument();
+  expect(screen.getByText('IN THE GROUND FOR 1 DAY')).toBeInTheDocument();
+  expect(screen.getByRole('img', { name: /red onion growing beneath green leaves/i })).toBeInTheDocument();
+  expect(screen.getByText('Seeds settle in')).toBeInTheDocument();
+  expect(screen.getByText('Keep the seed bed lightly moist')).toBeInTheDocument();
+  expect(screen.getByText('Sow seeds in a fine bed')).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /ruby ring onion current/i })).toHaveAttribute('aria-current', 'page');
+  expect(screen.getByRole('navigation', { name: 'Choose a plant' }).querySelectorAll('a')).toHaveLength(6);
   expect(await screen.findByText(/H 35° L 27°/)).toBeInTheDocument();
 });
 

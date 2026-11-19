@@ -194,6 +194,7 @@ a { color: inherit; }
 .okra-dot { background: #708b4e; }
 .kalabasa-dot { background: #d29343; }
 .cucumber-dot { background: #4b8567; }
+.onion-dot { background: #ad6574; }
 .plant-tab-current { margin-left: 3px; color: #9aa493; font-size: 6px; font-weight: 700; letter-spacing: .5px; }
 .eyebrow { display: flex; align-items: center; gap: 7px; margin: 0 0 12px; color: #8c9786; font-size: 9px; }
 .eyebrow-dot, .stage-pill > span { width: 6px; height: 6px; border-radius: 50%; background: #87a474; }
@@ -242,6 +243,11 @@ h1, h2, h3, p { margin-top: 0; }
 .cucumber-theme .stage-pill { border-color: #dce9df; color: #69836f; }
 .cucumber-theme .stage-pill > span { background: #5f8c6b; box-shadow: 0 0 0 3px #e0eee2; }
 .cucumber-theme .art-note { border-color: #e0ebe3; }
+.onion-theme .hero-card { border-color: #eee1e4; background: linear-gradient(110deg, #f8f0f1 0%, #f5edef 52%, #efe4e8 100%); }
+.onion-theme .hero-copy h2 em { color: #a45e70; }
+.onion-theme .stage-pill { border-color: #eedfe3; color: #966c76; }
+.onion-theme .stage-pill > span { background: #ae7180; box-shadow: 0 0 0 3px #f1e2e6; }
+.onion-theme .art-note { border-color: #eee1e4; }
 .hero-copy { position: relative; z-index: 1; width: 52%; max-width: 410px; }
 .stage-pill { display: inline-flex; height: 24px; align-items: center; gap: 7px; padding: 0 9px; border: 1px solid #dfe8d8; border-radius: 30px; background: rgb(255 255 255 / 62%); color: #73866c; font-size: 8px; font-weight: 700; letter-spacing: .8px; }
 .stage-pill > span { width: 5px; height: 5px; background: #849b71; box-shadow: 0 0 0 3px #e4eddd; }
