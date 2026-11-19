@@ -63,6 +63,96 @@ const plants = {
       { title: 'Pick at peak color', days: 'HARVEST · VARIETY & WEATHER DEPEND', text: 'Harvest when tomatoes reach their full color and give slightly to a gentle squeeze. Pick regularly to keep the plant producing.', icon: 'harvest' },
     ],
   },
+  okra: {
+    name: 'Okra',
+    shortName: 'Okra',
+    variety: 'Clemson Spineless',
+    day: 36,
+    totalDays: 60,
+    progress: 60,
+    harvestDays: 7,
+    summary: 'Your okra is beginning to set its first pods. Pick them young and often to keep this sunshine-loving plant producing.',
+    mood: 'standing tall',
+    stages: [
+      { name: 'New seedlings', range: 'Days 1–10', state: 'complete' },
+      { name: 'Leafing out', range: 'Days 11–25', state: 'complete' },
+      { name: 'First flowers', range: 'Days 26–35', state: 'complete' },
+      { name: 'Young pods', range: 'Days 36–45', state: 'current' },
+      { name: 'Pick often', range: 'Days 46–60', state: 'upcoming' },
+    ],
+    tasks: [
+      { id: 1, title: 'Check the soil moisture', detail: 'Water deeply if the top feels dry', done: false },
+      { id: 2, title: 'Look for tender new pods', detail: 'Young pods are the most delicious', done: false },
+      { id: 3, title: 'Clear weeds around the stem', detail: 'Give roots room to breathe', done: true },
+    ],
+    sunNote: <>Okra thrives in Philippine sunshine — give it <strong>6–8 hours of direct sun</strong> and soil that drains well.</>,
+    guide: [
+      { title: 'Sow straight into warm soil', days: 'SOW · WARM, SUNNY WEATHER', text: 'Soak seeds overnight, then sow about 2–3 cm deep in a sunny bed. Okra prefers warm roots and does not love being transplanted.', icon: 'seed' },
+      { title: 'Give each plant a little space', days: 'THIN · WHEN SEEDLINGS ARE STURDY', text: 'Keep the strongest seedling about 30–45 cm from its neighbors. Choose a sunny, well-drained spot and water at the base.', icon: 'transplant' },
+      { title: 'Watch flowers turn into pods', days: 'FLOWER & FRUIT · YOU ARE HERE', text: 'Bright flowers soon become pods. Keep moisture even while flowering and check plants every day once pods begin to form.', icon: 'flower', current: true },
+      { title: 'Harvest young and often', days: 'HARVEST · ABOUT 4–6 DAYS AFTER FLOWERING', text: 'Snip tender pods when they are about 5–8 cm long, usually every day or two. Regular picking keeps the plant producing.', icon: 'harvest' },
+    ],
+  },
+  kalabasa: {
+    name: 'Squash',
+    shortName: 'Kalabasa',
+    variety: 'Philippine Kalabasa',
+    day: 48,
+    totalDays: 110,
+    progress: 44,
+    harvestDays: 62,
+    summary: 'Your kalabasa vines are stretching into their flowering stage. Keep the soil evenly moist and give those long vines room to roam.',
+    mood: 'spreading out',
+    stages: [
+      { name: 'New seedlings', range: 'Days 1–12', state: 'complete' },
+      { name: 'Vines take off', range: 'Days 13–35', state: 'complete' },
+      { name: 'Flowers open', range: 'Days 36–55', state: 'current' },
+      { name: 'Fruit growing', range: 'Days 56–85', state: 'upcoming' },
+      { name: 'Ready to cure', range: 'Days 86–110+', state: 'upcoming' },
+    ],
+    tasks: [
+      { id: 1, title: 'Guide vines away from paths', detail: 'Let the runners spread freely', done: false },
+      { id: 2, title: 'Check moisture around the roots', detail: 'Water deeply during dry spells', done: false },
+      { id: 3, title: 'Look for fresh yellow flowers', detail: 'Male flowers often open first', done: true },
+    ],
+    sunNote: <>Kalabasa needs elbow room and sunshine — choose <strong>a bright spot with well-drained soil</strong> for its wandering vines.</>,
+    guide: [
+      { title: 'Sow in a sunny hill', days: 'SOW · WARM, RAIN-FREE SPELL', text: 'Plant 2–3 seeds about 2–3 cm deep in a small mound of loose, well-drained soil. Keep the soil moist while seeds sprout.', icon: 'seed' },
+      { title: 'Make room for the runners', days: 'THIN · AFTER SEEDLINGS EMERGE', text: 'Keep the strongest one or two plants and leave plenty of space for long vines. Mulch lightly to help soil hold moisture.', icon: 'transplant' },
+      { title: 'Help flowers set fruit', days: 'FLOWERING · YOU ARE HERE', text: 'Male and female flowers open separately. Bees do the work, or transfer pollen from a male flower to a female flower in the morning.', icon: 'flower', current: true },
+      { title: 'Let the rind harden', days: 'HARVEST · OFTEN 90–120 DAYS FROM SOWING', text: 'Pick mature kalabasa when its rind is hard and the stem begins to dry. Leave a short stem attached and cure in a dry, shaded place.', icon: 'harvest' },
+    ],
+  },
+  cucumber: {
+    name: 'Cucumber',
+    shortName: 'Cucumber',
+    variety: 'Poinsett 76',
+    day: 32,
+    totalDays: 60,
+    progress: 53,
+    harvestDays: 8,
+    summary: 'Your cucumber vine is setting fruit. A little consistent water and a sturdy trellis will help your cucumbers grow straight and crisp.',
+    mood: 'climbing along',
+    stages: [
+      { name: 'New seedlings', range: 'Days 1–10', state: 'complete' },
+      { name: 'Vines climb', range: 'Days 11–25', state: 'complete' },
+      { name: 'First flowers', range: 'Days 26–30', state: 'complete' },
+      { name: 'Fruit set', range: 'Days 31–40', state: 'current' },
+      { name: 'Pick while crisp', range: 'Days 41–60', state: 'upcoming' },
+    ],
+    tasks: [
+      { id: 1, title: 'Water the root zone', detail: 'Keep moisture steady, not soggy', done: false },
+      { id: 2, title: 'Check the vine supports', detail: 'Guide new tendrils onto the trellis', done: false },
+      { id: 3, title: 'Look beneath the leaves', detail: 'Small cucumbers can hide in the shade', done: true },
+    ],
+    sunNote: <>Cucumbers enjoy warm days and steady drinks — aim for <strong>6–8 hours of sun</strong> and avoid soggy soil.</>,
+    guide: [
+      { title: 'Sow where they will grow', days: 'SOW · WARM, WELL-DRAINED SOIL', text: 'Cucumbers dislike root disturbance, so sow seeds 2–3 cm deep directly in their sunny growing spot after heavy rain has passed.', icon: 'seed' },
+      { title: 'Set up a trellis early', days: 'SUPPORT · WHEN VINES BEGIN TO RUN', text: 'Give vines a trellis before they sprawl. Space plants about 30–45 cm apart and guide tendrils gently onto the support.', icon: 'transplant' },
+      { title: 'Keep fruit growing steadily', days: 'FLOWER & FRUIT · YOU ARE HERE', text: 'Water deeply at soil level and keep moisture consistent to help prevent bitter or misshapen fruit. Check under leaves as cucumbers grow.', icon: 'flower', current: true },
+      { title: 'Pick before seeds enlarge', days: 'HARVEST · CHECK VINES EVERY DAY', text: 'Pick when fruits are firm, evenly colored, and the right size for their variety. Frequent harvesting encourages more cucumbers.', icon: 'harvest' },
+    ],
+  },
 };
 
 function Icon({ name, size = 20, strokeWidth = 1.8 }) {
@@ -173,10 +263,77 @@ function TomatoIllustration() {
   );
 }
 
+function GardenIllustration({ plantSlug }) {
+  if (plantSlug === 'eggplant') return <EggplantIllustration />;
+  if (plantSlug === 'tomato') return <TomatoIllustration />;
+
+  const illustrations = {
+    okra: {
+      label: 'Illustration of okra pods growing on a leafy plant',
+      produce: (
+        <>
+          <path d="M259 146c20 17 31 44 31 79 0 23-5 43-15 58-10-15-16-35-16-58 0-35 10-62 30-79Z" fill="#6F985B" />
+          <path d="M260 146c12 5 21 5 31 0-3 10-9 17-17 20-8-3-13-10-14-20Z" fill="#557C49" />
+          <path d="M271 164c-3 31-4 68 4 105m-17-91 15 13m-13 9 15 12m-13 10 14 12m-11 11 10 9" stroke="#A8C07D" strokeWidth="2" strokeLinecap="round" />
+          <path d="M316 201c15 13 23 35 23 59 0 20-4 37-12 49-9-13-13-29-13-49 0-25 8-46 23-59Z" fill="#86A96B" />
+          <path d="M315 201c9 4 16 4 24 0-2 8-7 13-13 16-6-2-10-8-11-16Z" fill="#628451" />
+          <path d="M327 217v77m-10-54 10 10m-9 10 10 9m-9 10 9 8" stroke="#B6C98D" strokeWidth="1.7" strokeLinecap="round" />
+        </>
+      ),
+    },
+    kalabasa: {
+      label: 'Illustration of a ripe kalabasa squash growing on a vine',
+      produce: (
+        <>
+          <path d="M288 187c-36-20-72-16-86 11-11 20-4 48 14 64 19 16 42 17 68 8 25 10 51 7 67-10 18-20 15-48-2-65-17-17-39-19-61-8Z" fill="#D98D43" />
+          <path d="M288 187c-14 15-21 38-20 62 1 11 5 19 12 26 7-14 11-34 10-56 0-13 0-24-2-32Z" fill="#E9A653" />
+          <path d="M287 188c-20 13-31 34-31 59 0 14 4 24 12 32m38-91c12 17 18 37 17 59-1 13-5 24-12 32m-63-75c-12 17-16 37-11 56 3 12 9 21 17 26" stroke="#BD713A" strokeWidth="3" opacity=".8" />
+          <path d="M286 188c-2-10 0-17 8-23 4 9 9 13 18 13-8 5-12 12-13 21-5-7-12-10-21-9 4-4 7-5 8-2Z" fill="#607C4F" />
+        </>
+      ),
+    },
+    cucumber: {
+      label: 'Illustration of fresh cucumbers growing on a leafy vine',
+      produce: (
+        <>
+          <path d="M274 157c20 0 35 17 35 48v75c0 26-11 43-29 43s-30-17-30-43v-75c0-31 9-48 24-48Z" fill="#558253" transform="rotate(18 278 240)" />
+          <path d="M274 166c9 12 12 29 10 48l-8 80c-2 13-5 22-10 28-8-10-10-24-8-42l8-77c1-18 4-30 8-37Z" fill="#79A36A" opacity=".85" transform="rotate(18 278 240)" />
+          <path d="M265 191c-2 6-3 12-3 18m0 12c-1 6-2 12-2 18m-1 13c-1 6-1 12-1 17m60-77c2 6 3 12 3 18m1 12c1 6 2 12 2 18m0 13c1 6 1 12 1 17" stroke="#B5C890" strokeWidth="2" strokeLinecap="round" transform="rotate(18 278 240)" />
+          <path d="M293 161c-8-7-10-14-6-23 7 7 14 9 22 7-5 7-6 15-2 23-7-4-14-5-21-2 2-4 4-6 7-5Z" fill="#607C4F" />
+        </>
+      ),
+    },
+  };
+  const illustration = illustrations[plantSlug];
+
+  return (
+    <svg className="eggplant-illustration produce-illustration" viewBox="0 0 420 340" fill="none" role="img" aria-label={illustration.label}>
+      <circle cx="277" cy="164" r="127" fill={plantSlug === 'kalabasa' ? '#F3E9D7' : '#E7EEDC'} />
+      <circle cx="90" cy="55" r="24" fill="#F3D28B" opacity=".8" />
+      <path d="M225 304c-3-54 2-104-1-151-2-45 8-79 29-112" stroke="#52774F" strokeWidth="7" strokeLinecap="round" />
+      <path d="M224 220c-37-37-72-49-110-39 17 31 54 49 109 49" fill="#71916B" />
+      <path d="M220 218c-38-16-67-26-100-31" stroke="#53744F" strokeWidth="2" />
+      <path d="M225 165c36-46 72-64 111-57-12 35-49 61-107 69" fill="#829D73" />
+      <path d="M230 166c37-23 65-42 97-53" stroke="#5C7C55" strokeWidth="2" />
+      <path d="M232 133c-8-43-1-76 25-99 18 29 18 64-15 104" fill="#75936C" />
+      <path d="M253 42c-8 23-13 51-12 81" stroke="#587A52" strokeWidth="2" />
+      <path d="M229 174c-17-25-37-38-63-39 4 27 24 47 64 57" fill="#91A681" />
+      <path d="M177 141c18 13 34 29 48 48" stroke="#607D57" strokeWidth="2" />
+      <path d="M235 215c20-26 46-38 78-36-8 31-32 49-76 53" fill="#607F59" />
+      <path d="M302 183c-23 14-43 29-64 49" stroke="#4F7049" strokeWidth="2" />
+      <path d="M248 152c16-16 32-19 48-10-10 18-25 27-48 24m-3 5c-17 1-27 10-30 26 19 1 32-7 39-24" fill="#8EA27A" />
+      <path d="M294 145c-17 6-31 13-45 23m5-1c-12 8-21 17-29 29" stroke="#637F58" strokeWidth="2" />
+      {illustration.produce}
+      <path d="M111 264c44-12 94-13 142-5m-145 20c36-7 63-8 91-6" stroke="#A0B297" strokeWidth="1.5" strokeDasharray="3 7" />
+      <path d="M302 88c2-7 7-12 14-14m5 16c5-4 11-5 17-3M90 105c2-7 7-12 14-14m5 16c5-4 11-5 17-3" stroke="#A0B297" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 function App() {
-  const isTomato = new URLSearchParams(window.location.search).get('plant') === 'tomato';
   const plantEntries = Object.entries(plants);
-  const selectedPlant = isTomato ? 'tomato' : 'eggplant';
+  const requestedPlant = new URLSearchParams(window.location.search).get('plant');
+  const selectedPlant = Object.prototype.hasOwnProperty.call(plants, requestedPlant) ? requestedPlant : 'eggplant';
   const plant = plants[selectedPlant];
   const plantIndex = plantEntries.findIndex(([slug]) => slug === selectedPlant);
   const plantNumber = String(plantIndex + 1).padStart(2, '0');
@@ -253,7 +410,7 @@ function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className={`app-shell${isTomato ? ' tomato-theme' : ''}`}>
+    <div className={`app-shell ${selectedPlant}-theme`}>
       <aside className="sidebar">
         <a className="brand" href="#overview" aria-label="Little Plot home">
           <span className="brand-mark"><Icon name="leaf" size={21} /></span>
@@ -318,14 +475,18 @@ function App() {
 
           <nav className="plant-tabs" aria-label="Choose a plant">
             <span>GROWING NOW</span>
-            <a className={`plant-tab${!isTomato ? ' selected' : ''}`} href="?plant=eggplant" aria-current={!isTomato ? 'page' : undefined}>
-              <span className="plant-tab-dot eggplant-dot" /> Black Beauty
-              {!isTomato && <span className="plant-tab-current">CURRENT</span>}
-            </a>
-            <a className={`plant-tab${isTomato ? ' selected' : ''}`} href="?plant=tomato" aria-current={isTomato ? 'page' : undefined}>
-              <span className="plant-tab-dot tomato-dot" /> Sungold tomato
-              {isTomato && <span className="plant-tab-current">CURRENT</span>}
-            </a>
+            {plantEntries.map(([slug, entry]) => (
+              <a
+                className={`plant-tab${selectedPlant === slug ? ' selected' : ''}`}
+                href={`?plant=${slug}`}
+                aria-label={`${entry.variety} ${entry.name}${selectedPlant === slug ? ' current' : ''}`}
+                aria-current={selectedPlant === slug ? 'page' : undefined}
+                key={slug}
+              >
+                <span className={`plant-tab-dot ${slug}-dot`} /> {entry.shortName || entry.variety}
+                {selectedPlant === slug && <span className="plant-tab-current">CURRENT</span>}
+              </a>
+            ))}
           </nav>
 
           <motion.section className="hero-card" aria-labelledby="plant-title" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.08 }}>
@@ -335,7 +496,7 @@ function App() {
               <p>{plant.summary}</p>
               <a className="text-link" href="#growth">Follow its growth <span>↗</span></a>
             </div>
-            <div className="hero-art">{isTomato ? <TomatoIllustration /> : <EggplantIllustration />}<span className="art-note"><span>✳</span> {plant.mood}</span></div>
+            <div className="hero-art"><GardenIllustration plantSlug={selectedPlant} /><span className="art-note"><span>✳</span> {plant.mood}</span></div>
             <div className="hero-index" role="group" aria-label={`Plant ${plantNumber} of ${plantCount}`}>{plantNumber} <span>/</span> {plantCount}</div>
           </motion.section>
 

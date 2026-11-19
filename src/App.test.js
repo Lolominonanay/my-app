@@ -29,11 +29,11 @@ test('shows Justin Arias consistently in the garden and profile', () => {
   expect(screen.queryByText(/Maya|Chen/i)).not.toBeInTheDocument();
 });
 
-test('shows a plant count matching the two available plants', () => {
+test('shows a plant count matching the five available plants', () => {
   render(<App />);
 
-  expect(screen.getByText('My plants').parentElement).toHaveTextContent('2');
-  expect(screen.getByText('My plants').parentElement).not.toHaveTextContent('3');
+  expect(screen.getByText('My plants').parentElement).toHaveTextContent('5');
+  expect(screen.getByRole('navigation', { name: 'Choose a plant' }).querySelectorAll('a')).toHaveLength(5);
 });
 
 test('shows an error and retry when the weather service is unavailable', async () => {
@@ -49,7 +49,7 @@ test('shows an error and retry when the weather service is unavailable', async (
 test('shows the eggplant dashboard and growing stages', async () => {
   render(<App />);
 
-  expect(screen.getByRole('group', { name: 'Plant 01 of 02' })).toHaveTextContent('01 / 02');
+  expect(screen.getByRole('group', { name: 'Plant 01 of 05' })).toHaveTextContent('01 / 05');
   expect(screen.getByRole('heading', { name: /growing something wonderful/i })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: /meet your black beauty/i })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: /your growing story/i })).toBeInTheDocument();
@@ -62,13 +62,55 @@ test('shows the tomato page with its own growth stages and care guide', async ()
   render(<App />);
 
   expect(screen.getByRole('heading', { name: /meet your sungold/i })).toBeInTheDocument();
-  expect(screen.getByRole('group', { name: 'Plant 02 of 02' })).toHaveTextContent('02 / 02');
+  expect(screen.getByRole('group', { name: 'Plant 02 of 05' })).toHaveTextContent('02 / 05');
   expect(screen.getByRole('img', { name: /ripe tomatoes growing on a leafy vine/i })).toBeInTheDocument();
   expect(screen.getByText('Fruit set')).toBeInTheDocument();
   expect(screen.getByText('Water deeply at the base')).toBeInTheDocument();
   expect(screen.getByText('Pick at peak color')).toBeInTheDocument();
   expect(screen.getByRole('link', { name: /sungold tomato current/i })).toHaveAttribute('aria-current', 'page');
   expect(document.title).toBe('Little Plot — Tomato growing journal');
+  expect(await screen.findByText(/H 35° L 27°/)).toBeInTheDocument();
+});
+
+test.each([
+  {
+    slug: 'okra',
+    heading: /meet your clemson spineless/i,
+    counter: 'Plant 03 of 05',
+    image: /okra pods growing on a leafy plant/i,
+    stage: 'Young pods',
+    task: 'Look for tender new pods',
+    guide: 'Harvest young and often',
+  },
+  {
+    slug: 'kalabasa',
+    heading: /meet your philippine kalabasa/i,
+    counter: 'Plant 04 of 05',
+    image: /ripe kalabasa squash growing on a vine/i,
+    stage: 'Flowers open',
+    task: 'Look for fresh yellow flowers',
+    guide: 'Let the rind harden',
+  },
+  {
+    slug: 'cucumber',
+    heading: /meet your poinsett 76/i,
+    counter: 'Plant 05 of 05',
+    image: /fresh cucumbers growing on a leafy vine/i,
+    stage: 'Fruit set',
+    task: 'Check the vine supports',
+    guide: 'Pick before seeds enlarge',
+  },
+])('shows the $slug dashboard with its own guide and plant number', async ({ slug, heading, counter, image, stage, task, guide }) => {
+  window.history.replaceState({}, '', `/?plant=${slug}`);
+  render(<App />);
+
+  expect(screen.getByRole('heading', { name: heading })).toBeInTheDocument();
+  expect(screen.getByRole('group', { name: counter })).toBeInTheDocument();
+  expect(screen.getByRole('img', { name: image })).toBeInTheDocument();
+  expect(screen.getByText(stage)).toBeInTheDocument();
+  expect(screen.getByText(task)).toBeInTheDocument();
+  expect(screen.getByText(guide)).toBeInTheDocument();
+  expect(screen.getByRole('navigation', { name: 'Choose a plant' }).querySelectorAll('a')).toHaveLength(5);
   expect(await screen.findByText(/H 35° L 27°/)).toBeInTheDocument();
 });
 

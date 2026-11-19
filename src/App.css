@@ -183,7 +183,7 @@ a { color: inherit; }
 
 .dashboard { width: min(100%, 1190px); margin: 0 auto; padding: 32px 48px 25px; }
 .welcome-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 25px; margin-bottom: 22px; }
-.plant-tabs { display: flex; align-items: center; gap: 7px; margin: -7px 0 15px; }
+.plant-tabs { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 7px; margin: -7px 0 15px; }
 .plant-tabs > span { margin-right: 5px; color: #a0a69c; font-size: 8px; font-weight: 700; letter-spacing: 1px; }
 .plant-tab { display: inline-flex; min-height: 27px; align-items: center; gap: 6px; padding: 0 9px; border: 1px solid transparent; border-radius: 8px; color: #8e958b; font-size: 9px; text-decoration: none; transition: background .2s ease, color .2s ease, border-color .2s ease; }
 .plant-tab:hover { background: #f4f6f0; color: #51694d; }
@@ -191,6 +191,9 @@ a { color: inherit; }
 .plant-tab-dot { width: 7px; height: 7px; border-radius: 50%; }
 .eggplant-dot { background: #73548d; }
 .tomato-dot { background: #cf6045; }
+.okra-dot { background: #708b4e; }
+.kalabasa-dot { background: #d29343; }
+.cucumber-dot { background: #4b8567; }
 .plant-tab-current { margin-left: 3px; color: #9aa493; font-size: 6px; font-weight: 700; letter-spacing: .5px; }
 .eyebrow { display: flex; align-items: center; gap: 7px; margin: 0 0 12px; color: #8c9786; font-size: 9px; }
 .eyebrow-dot, .stage-pill > span { width: 6px; height: 6px; border-radius: 50%; background: #87a474; }
@@ -225,6 +228,20 @@ h1, h2, h3, p { margin-top: 0; }
 .tomato-theme .stage-pill { border-color: #eee2d5; color: #a2735c; }
 .tomato-theme .stage-pill > span { background: #d27657; box-shadow: 0 0 0 3px #f4e3d8; }
 .tomato-theme .art-note { border-color: #f0e5d9; }
+.okra-theme .hero-card { border-color: #e4eadb; background: linear-gradient(110deg, #f1f5e9 0%, #edf3e6 52%, #e6eedc 100%); }
+.okra-theme .hero-copy h2 em { color: #607c4e; }
+.okra-theme .stage-pill { border-color: #dfe8d8; color: #73866c; }
+.okra-theme .stage-pill > span { background: #78935c; box-shadow: 0 0 0 3px #e4eddd; }
+.kalabasa-theme .hero-card { border-color: #eee7d9; background: linear-gradient(110deg, #f8f3e8 0%, #f5efdf 52%, #efe6d2 100%); }
+.kalabasa-theme .hero-copy h2 em { color: #ad7438; }
+.kalabasa-theme .stage-pill { border-color: #eee3ce; color: #9a794f; }
+.kalabasa-theme .stage-pill > span { background: #c18a48; box-shadow: 0 0 0 3px #f2e7d3; }
+.kalabasa-theme .art-note { border-color: #eee3d2; }
+.cucumber-theme .hero-card { border-color: #e0ebe3; background: linear-gradient(110deg, #edf5ef 0%, #eaf3eb 52%, #e3eee6 100%); }
+.cucumber-theme .hero-copy h2 em { color: #4e8060; }
+.cucumber-theme .stage-pill { border-color: #dce9df; color: #69836f; }
+.cucumber-theme .stage-pill > span { background: #5f8c6b; box-shadow: 0 0 0 3px #e0eee2; }
+.cucumber-theme .art-note { border-color: #e0ebe3; }
 .hero-copy { position: relative; z-index: 1; width: 52%; max-width: 410px; }
 .stage-pill { display: inline-flex; height: 24px; align-items: center; gap: 7px; padding: 0 9px; border: 1px solid #dfe8d8; border-radius: 30px; background: rgb(255 255 255 / 62%); color: #73866c; font-size: 8px; font-weight: 700; letter-spacing: .8px; }
 .stage-pill > span { width: 5px; height: 5px; background: #849b71; box-shadow: 0 0 0 3px #e4eddd; }
@@ -409,6 +426,10 @@ h1, h2, h3, p { margin-top: 0; }
   .search-button { display: none; }
   .dashboard { padding: 25px 17px 19px; }
   .welcome-row { align-items: flex-start; gap: 12px; margin-bottom: 17px; }
+  .plant-tabs { gap: 4px; margin: -5px 0 12px; }
+  .plant-tabs > span { width: 100%; margin: 0 0 1px; }
+  .plant-tab { min-height: 27px; padding: 0 7px; font-size: 8px; }
+  .plant-tab-current { font-size: 5px; }
   .welcome-row h1 { font-size: clamp(30px, 8vw, 38px); }
   .welcome-copy { max-width: 250px; font-size: 10px; line-height: 1.55; }
   .weather-card { display: grid; flex: 0 0 auto; grid-template-columns: 32px minmax(0, 1fr); grid-template-rows: auto auto; gap: 1px 7px; align-items: center; padding: 7px; }
@@ -462,6 +483,7 @@ h1, h2, h3, p { margin-top: 0; }
   .dashboard { padding-right: 12px; padding-left: 12px; }
   .topbar { padding-right: 12px; padding-left: 12px; }
   .welcome-row { flex-wrap: wrap; }
+  .plant-tab { gap: 4px; padding-right: 6px; padding-left: 6px; }
   .weather-card { padding: 6px; }
   .timeline-stage > strong { font-size: 6px; }
   .timeline-stage > span { font-size: 6px; }
