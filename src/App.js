@@ -75,6 +75,8 @@ function Icon({ name, size = 20, strokeWidth = 1.8 }) {
     search: <><circle cx="10.8" cy="10.8" r="6.8" /><path d="m16 16 4.5 4.5" /></>,
     bell: <><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" /><path d="M10 21h4" /></>,
     sun: <><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" /></>,
+    cloud: <path d="M20 16.2A4.5 4.5 0 0 0 18.5 7.5 6.5 6.5 0 0 0 6 9a4 4 0 0 0 .5 8H19" />,
+    rain: <><path d="M20 15.5a4.5 4.5 0 0 0-1.5-8.8A6.5 6.5 0 0 0 6 8.3 4 4 0 0 0 6.5 16H19" /><path d="m8 19-1 2m6-2-1 2m6-2-1 2" /></>,
     drop: <><path d="M12 22a7 7 0 0 0 7-7c0-4-7-13-7-13S5 11 5 15a7 7 0 0 0 7 7Z" /><path d="M9 16a3 3 0 0 0 3 3" /></>,
     temp: <><path d="M14 14.8V5a3 3 0 0 0-6 0v9.8a5 5 0 1 0 6 0Z" /><path d="M11 12v6" /></>,
     clock: <><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></>,
@@ -89,6 +91,17 @@ function Icon({ name, size = 20, strokeWidth = 1.8 }) {
       {paths[name]}
     </svg>
   );
+}
+
+function getWeatherCondition(code) {
+  if (code === 0) return { label: 'Clear skies', icon: 'sun' };
+  if (code <= 2) return { label: 'Partly cloudy', icon: 'cloud' };
+  if (code === 3 || code === 45 || code === 48) return { label: code === 3 ? 'Overcast' : 'Foggy', icon: 'cloud' };
+  if (code <= 57) return { label: 'Light drizzle', icon: 'rain' };
+  if (code <= 67 || (code >= 80 && code <= 82)) return { label: 'Rain showers', icon: 'rain' };
+  if (code <= 77 || code === 85 || code === 86) return { label: 'Snow', icon: 'cloud' };
+  if (code >= 95) return { label: 'Thunderstorms', icon: 'rain' };
+  return { label: 'Cloudy', icon: 'cloud' };
 }
 
 function EggplantIllustration() {
@@ -167,11 +180,56 @@ function App() {
   const [note, setNote] = useState('');
   const [savedNote, setSavedNote] = useState('');
   const [showJournal, setShowJournal] = useState(false);
+  const [weather, setWeather] = useState(null);
+  const [weatherError, setWeatherError] = useState(false);
+  const [weatherRetry, setWeatherRetry] = useState(0);
   const completedTasks = tasks.filter((task) => task.done).length;
 
   useEffect(() => {
     document.title = `Little Plot — ${plant.name} growing journal`;
   }, [plant]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const loadWeather = async () => {
+      try {
+        const response = await fetch(
+          'https://api.open-meteo.com/v1/forecast?latitude=14.5995&longitude=120.9842&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FManila&forecast_days=1',
+          { signal: controller.signal },
+        );
+        if (!response.ok) {
+          throw new Error(`Weather request failed with status ${response.status}`);
+        }
+
+        const data = await response.json();
+        const high = data.daily?.temperature_2m_max?.[0];
+        const low = data.daily?.temperature_2m_min?.[0];
+        if (
+          !Number.isFinite(data.current?.temperature_2m)
+          || !Number.isInteger(data.current?.weather_code)
+          || !Number.isFinite(high)
+          || !Number.isFinite(low)
+        ) {
+          throw new Error('Weather service returned incomplete conditions');
+        }
+
+        setWeather({
+          temperature: data.current.temperature_2m,
+          code: data.current.weather_code,
+          high,
+          low,
+        });
+        setWeatherError(false);
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          setWeatherError(true);
+        }
+      }
+    };
+
+    loadWeather();
+    return () => controller.abort();
+  }, [weatherRetry]);
 
   const toggleTask = (id) => {
     setTasks((currentTasks) => currentTasks.map((task) => (
@@ -242,10 +300,14 @@ function App() {
               <h1>Growing something<br /><em>wonderful.</em></h1>
               <p className="welcome-copy">A little sun, a little water, and look how far you’ve come.</p>
             </div>
-            <div className="weather-card">
-              <div className="weather-icon"><Icon name="sun" size={22} /></div>
-              <div><span className="weather-label">A lovely day to grow</span><strong>24°<small> C</small></strong></div>
-              <span className="weather-place">Oakland, CA</span>
+            <div className={`weather-card${weatherError ? ' weather-card-error' : ''}`} aria-live="polite">
+              <div className="weather-icon"><Icon name={weather ? getWeatherCondition(weather.code).icon : 'sun'} size={22} /></div>
+              <div className="weather-details">
+                <span className="weather-label">{weather ? getWeatherCondition(weather.code).label : weatherError ? 'Weather unavailable' : 'Checking today’s weather'}</span>
+                <strong>{weather ? Math.round(weather.temperature) : '—'}<small>° C</small></strong>
+                {weatherError && <button className="weather-retry" type="button" onClick={() => { setWeatherError(false); setWeatherRetry((retry) => retry + 1); }}>Try again</button>}
+              </div>
+              <span className="weather-place">Manila, Philippines{weather && <span className="weather-range"> · H {Math.round(weather.high)}° L {Math.round(weather.low)}°</span>}</span>
             </div>
           </motion.section>
 
