@@ -6,17 +6,17 @@ const plants = {
   eggplant: {
     name: 'Eggplant',
     variety: 'Black Beauty',
-    day: 42,
+    day: 1,
     totalDays: 90,
-    progress: 47,
-    harvestDays: 34,
-    stage: 'First flowers',
-    summary: 'Your eggplant is settling into its flowering stage. Those first blooms mean little fruits are just around the corner.',
+    progress: 1,
+    harvestDays: 75,
+    stage: 'New home',
+    summary: 'Your Black Beauty journey starts today. Give your eggplant seeds warmth, gentle moisture, and a bright place to begin.',
     mood: 'looking leafy',
     stages: [
-      { name: 'New home', range: 'Days 1–14', state: 'complete' },
-      { name: 'Leafing out', range: 'Days 15–35', state: 'complete' },
-      { name: 'First flowers', range: 'Days 36–55', state: 'current' },
+      { name: 'New home', range: 'Days 1–14', state: 'current' },
+      { name: 'Leafing out', range: 'Days 15–35', state: 'upcoming' },
+      { name: 'First flowers', range: 'Days 36–55', state: 'upcoming' },
       { name: 'Little fruits', range: 'Days 56–75', state: 'upcoming' },
       { name: 'Harvest time', range: 'Days 76–90', state: 'upcoming' },
     ],
@@ -27,27 +27,27 @@ const plants = {
     ],
     sunNote: <>Eggplants love a warm, sunny spot — <strong>6–8 hours of sun</strong> is their happy place.</>,
     guide: [
-      { title: 'Start with warmth', days: 'SOW · 10–14 WEEKS BEFORE LAST FROST', text: 'Sow seeds indoors in a warm, bright spot. They like it cozy — aim for soil around 24–29°C until the first leaves appear.', icon: 'seed' },
+      { title: 'Start with warmth', days: 'SOW · 10–14 WEEKS BEFORE LAST FROST', text: 'Sow seeds indoors in a warm, bright spot. They like it cozy — aim for soil around 24–29°C until the first leaves appear.', icon: 'seed', current: true },
       { title: 'Give them room to grow', days: 'TRANSPLANT · AFTER NIGHTS WARM UP', text: 'Move sturdy seedlings outdoors once frost has passed. Leave about 45–60 cm between plants and choose your sunniest spot.', icon: 'transplant' },
-      { title: 'Flowers become fruit', days: 'FLOWER & FRUIT · YOU ARE HERE', text: 'Keep soil evenly moist, water at the base, and support heavy stems. A gentle shake can help flowers pollinate.', icon: 'flower', current: true },
+      { title: 'Flowers become fruit', days: 'FLOWER & FRUIT', text: 'Keep soil evenly moist, water at the base, and support heavy stems. A gentle shake can help flowers pollinate.', icon: 'flower' },
       { title: 'Pick while they shine', days: 'HARVEST · OFTEN 65–90 DAYS AFTER TRANSPLANT', text: 'Harvest when the skin is glossy and the fruit feels firm. Snip the stem with pruners, leaving a little cap attached.', icon: 'harvest' },
     ],
   },
   tomato: {
     name: 'Tomato',
     variety: 'Sungold',
-    day: 58,
+    day: 1,
     totalDays: 85,
-    progress: 68,
-    harvestDays: 20,
-    stage: 'Fruit set',
-    summary: 'Your Sungold is setting its first clusters of fruit. Keep it watered and supported — those little green tomatoes are on their way.',
+    progress: 1,
+    harvestDays: 77,
+    stage: 'Tiny seedling',
+    summary: 'Your Sungold journey starts today. Give the seeds a warm, bright spot and keep their growing mix gently moist.',
     mood: 'fruiting happily',
     stages: [
-      { name: 'Tiny seedling', range: 'Days 1–14', state: 'complete' },
-      { name: 'Settling in', range: 'Days 15–35', state: 'complete' },
-      { name: 'First flowers', range: 'Days 36–50', state: 'complete' },
-      { name: 'Fruit set', range: 'Days 51–65', state: 'current' },
+      { name: 'Tiny seedling', range: 'Days 1–14', state: 'current' },
+      { name: 'Settling in', range: 'Days 15–35', state: 'upcoming' },
+      { name: 'First flowers', range: 'Days 36–50', state: 'upcoming' },
+      { name: 'Fruit set', range: 'Days 51–65', state: 'upcoming' },
       { name: 'Ready to pick', range: 'Days 66–85', state: 'upcoming' },
     ],
     tasks: [
@@ -57,9 +57,9 @@ const plants = {
     ],
     sunNote: <>Tomatoes are sun seekers — aim for <strong>6–8 hours of direct sun</strong> and water the soil, not the leaves.</>,
     guide: [
-      { title: 'Give seeds a head start', days: 'SOW · 6–8 WEEKS BEFORE LAST FROST', text: 'Start seeds indoors in a bright, warm spot. Keep the mix gently moist and turn seedlings toward the light as they grow.', icon: 'seed' },
+      { title: 'Give seeds a head start', days: 'SOW · 6–8 WEEKS BEFORE LAST FROST', text: 'Start seeds indoors in a bright, warm spot. Keep the mix gently moist and turn seedlings toward the light as they grow.', icon: 'seed', current: true },
       { title: 'Move out after frost', days: 'TRANSPLANT · WHEN NIGHTS STAY WARM', text: 'Harden off seedlings for a week before planting outdoors. Bury the stem a little deeper and add a sturdy cage or stake.', icon: 'transplant' },
-      { title: 'Support fruiting vines', days: 'FLOWER & FRUIT · YOU ARE HERE', text: 'Water consistently at soil level, keep ties loose, and give fruit clusters room to ripen. A gentle shake helps flowers pollinate.', icon: 'flower', current: true },
+      { title: 'Support fruiting vines', days: 'FLOWER & FRUIT', text: 'Water consistently at soil level, keep ties loose, and give fruit clusters room to ripen. A gentle shake helps flowers pollinate.', icon: 'flower' },
       { title: 'Pick at peak color', days: 'HARVEST · VARIETY & WEATHER DEPEND', text: 'Harvest when tomatoes reach their full color and give slightly to a gentle squeeze. Pick regularly to keep the plant producing.', icon: 'harvest' },
     ],
   },
@@ -67,17 +67,17 @@ const plants = {
     name: 'Okra',
     shortName: 'Okra',
     variety: 'Clemson Spineless',
-    day: 36,
+    day: 1,
     totalDays: 60,
-    progress: 60,
-    harvestDays: 7,
-    summary: 'Your okra is beginning to set its first pods. Pick them young and often to keep this sunshine-loving plant producing.',
+    progress: 1,
+    harvestDays: 42,
+    summary: 'Your okra journey begins today. Soak the seeds overnight and sow them in warm soil where they can enjoy plenty of sunshine.',
     mood: 'standing tall',
     stages: [
-      { name: 'New seedlings', range: 'Days 1–10', state: 'complete' },
-      { name: 'Leafing out', range: 'Days 11–25', state: 'complete' },
-      { name: 'First flowers', range: 'Days 26–35', state: 'complete' },
-      { name: 'Young pods', range: 'Days 36–45', state: 'current' },
+      { name: 'New seedlings', range: 'Days 1–10', state: 'current' },
+      { name: 'Leafing out', range: 'Days 11–25', state: 'upcoming' },
+      { name: 'First flowers', range: 'Days 26–35', state: 'upcoming' },
+      { name: 'Young pods', range: 'Days 36–45', state: 'upcoming' },
       { name: 'Pick often', range: 'Days 46–60', state: 'upcoming' },
     ],
     tasks: [
@@ -87,9 +87,9 @@ const plants = {
     ],
     sunNote: <>Okra thrives in Philippine sunshine — give it <strong>6–8 hours of direct sun</strong> and soil that drains well.</>,
     guide: [
-      { title: 'Sow straight into warm soil', days: 'SOW · WARM, SUNNY WEATHER', text: 'Soak seeds overnight, then sow about 2–3 cm deep in a sunny bed. Okra prefers warm roots and does not love being transplanted.', icon: 'seed' },
+      { title: 'Sow straight into warm soil', days: 'SOW · WARM, SUNNY WEATHER', text: 'Soak seeds overnight, then sow about 2–3 cm deep in a sunny bed. Okra prefers warm roots and does not love being transplanted.', icon: 'seed', current: true },
       { title: 'Give each plant a little space', days: 'THIN · WHEN SEEDLINGS ARE STURDY', text: 'Keep the strongest seedling about 30–45 cm from its neighbors. Choose a sunny, well-drained spot and water at the base.', icon: 'transplant' },
-      { title: 'Watch flowers turn into pods', days: 'FLOWER & FRUIT · YOU ARE HERE', text: 'Bright flowers soon become pods. Keep moisture even while flowering and check plants every day once pods begin to form.', icon: 'flower', current: true },
+      { title: 'Watch flowers turn into pods', days: 'FLOWER & FRUIT', text: 'Bright flowers soon become pods. Keep moisture even while flowering and check plants every day once pods begin to form.', icon: 'flower' },
       { title: 'Harvest young and often', days: 'HARVEST · ABOUT 4–6 DAYS AFTER FLOWERING', text: 'Snip tender pods when they are about 5–8 cm long, usually every day or two. Regular picking keeps the plant producing.', icon: 'harvest' },
     ],
   },
@@ -97,16 +97,16 @@ const plants = {
     name: 'Squash',
     shortName: 'Kalabasa',
     variety: 'Philippine Kalabasa',
-    day: 48,
+    day: 1,
     totalDays: 110,
-    progress: 44,
-    harvestDays: 62,
-    summary: 'Your kalabasa vines are stretching into their flowering stage. Keep the soil evenly moist and give those long vines room to roam.',
+    progress: 1,
+    harvestDays: 109,
+    summary: 'Your kalabasa journey starts today. Sow into a sunny mound of warm, well-drained soil and get ready to give those vines room to roam.',
     mood: 'spreading out',
     stages: [
-      { name: 'New seedlings', range: 'Days 1–12', state: 'complete' },
-      { name: 'Vines take off', range: 'Days 13–35', state: 'complete' },
-      { name: 'Flowers open', range: 'Days 36–55', state: 'current' },
+      { name: 'New seedlings', range: 'Days 1–12', state: 'current' },
+      { name: 'Vines take off', range: 'Days 13–35', state: 'upcoming' },
+      { name: 'Flowers open', range: 'Days 36–55', state: 'upcoming' },
       { name: 'Fruit growing', range: 'Days 56–85', state: 'upcoming' },
       { name: 'Ready to cure', range: 'Days 86–110+', state: 'upcoming' },
     ],
@@ -117,9 +117,9 @@ const plants = {
     ],
     sunNote: <>Kalabasa needs elbow room and sunshine — choose <strong>a bright spot with well-drained soil</strong> for its wandering vines.</>,
     guide: [
-      { title: 'Sow in a sunny hill', days: 'SOW · WARM, RAIN-FREE SPELL', text: 'Plant 2–3 seeds about 2–3 cm deep in a small mound of loose, well-drained soil. Keep the soil moist while seeds sprout.', icon: 'seed' },
+      { title: 'Sow in a sunny hill', days: 'SOW · WARM, RAIN-FREE SPELL', text: 'Plant 2–3 seeds about 2–3 cm deep in a small mound of loose, well-drained soil. Keep the soil moist while seeds sprout.', icon: 'seed', current: true },
       { title: 'Make room for the runners', days: 'THIN · AFTER SEEDLINGS EMERGE', text: 'Keep the strongest one or two plants and leave plenty of space for long vines. Mulch lightly to help soil hold moisture.', icon: 'transplant' },
-      { title: 'Help flowers set fruit', days: 'FLOWERING · YOU ARE HERE', text: 'Male and female flowers open separately. Bees do the work, or transfer pollen from a male flower to a female flower in the morning.', icon: 'flower', current: true },
+      { title: 'Help flowers set fruit', days: 'FLOWERING', text: 'Male and female flowers open separately. Bees do the work, or transfer pollen from a male flower to a female flower in the morning.', icon: 'flower' },
       { title: 'Let the rind harden', days: 'HARVEST · OFTEN 90–120 DAYS FROM SOWING', text: 'Pick mature kalabasa when its rind is hard and the stem begins to dry. Leave a short stem attached and cure in a dry, shaded place.', icon: 'harvest' },
     ],
   },
@@ -127,17 +127,17 @@ const plants = {
     name: 'Cucumber',
     shortName: 'Cucumber',
     variety: 'Green Gem',
-    day: 32,
+    day: 1,
     totalDays: 60,
-    progress: 53,
-    harvestDays: 8,
-    summary: 'Your cucumber vine is setting fruit. A little consistent water and a sturdy trellis will help your cucumbers grow straight and crisp.',
+    progress: 1,
+    harvestDays: 39,
+    summary: 'Your Green Gem cucumber journey starts today. Sow seeds in their sunny growing spot and prepare a trellis for the vines to climb.',
     mood: 'climbing along',
     stages: [
-      { name: 'New seedlings', range: 'Days 1–10', state: 'complete' },
-      { name: 'Vines climb', range: 'Days 11–25', state: 'complete' },
-      { name: 'First flowers', range: 'Days 26–30', state: 'complete' },
-      { name: 'Fruit set', range: 'Days 31–40', state: 'current' },
+      { name: 'New seedlings', range: 'Days 1–10', state: 'current' },
+      { name: 'Vines climb', range: 'Days 11–25', state: 'upcoming' },
+      { name: 'First flowers', range: 'Days 26–30', state: 'upcoming' },
+      { name: 'Fruit set', range: 'Days 31–40', state: 'upcoming' },
       { name: 'Pick while crisp', range: 'Days 41–60', state: 'upcoming' },
     ],
     tasks: [
@@ -147,9 +147,9 @@ const plants = {
     ],
     sunNote: <>Cucumbers enjoy warm days and steady drinks — aim for <strong>6–8 hours of sun</strong> and avoid soggy soil.</>,
     guide: [
-      { title: 'Sow where they will grow', days: 'SOW · WARM, WELL-DRAINED SOIL', text: 'Cucumbers dislike root disturbance, so sow seeds 2–3 cm deep directly in their sunny growing spot after heavy rain has passed.', icon: 'seed' },
+      { title: 'Sow where they will grow', days: 'SOW · WARM, WELL-DRAINED SOIL', text: 'Cucumbers dislike root disturbance, so sow seeds 2–3 cm deep directly in their sunny growing spot after heavy rain has passed.', icon: 'seed', current: true },
       { title: 'Set up a trellis early', days: 'SUPPORT · WHEN VINES BEGIN TO RUN', text: 'Give vines a trellis before they sprawl. Space plants about 30–45 cm apart and guide tendrils gently onto the support.', icon: 'transplant' },
-      { title: 'Keep fruit growing steadily', days: 'FLOWER & FRUIT · YOU ARE HERE', text: 'Water deeply at soil level and keep moisture consistent to help prevent bitter or misshapen fruit. Check under leaves as cucumbers grow.', icon: 'flower', current: true },
+      { title: 'Keep fruit growing steadily', days: 'FLOWER & FRUIT', text: 'Water deeply at soil level and keep moisture consistent to help prevent bitter or misshapen fruit. Check under leaves as cucumbers grow.', icon: 'flower' },
       { title: 'Pick before seeds enlarge', days: 'HARVEST · CHECK VINES EVERY DAY', text: 'Pick when fruits are firm, evenly colored, and the right size for their variety. Frequent harvesting encourages more cucumbers.', icon: 'harvest' },
     ],
   },
@@ -338,6 +338,7 @@ function App() {
   const plantIndex = plantEntries.findIndex(([slug]) => slug === selectedPlant);
   const plantNumber = String(plantIndex + 1).padStart(2, '0');
   const plantCount = String(plantEntries.length).padStart(2, '0');
+  const dayUnit = plant.day === 1 ? 'day' : 'days';
   const [tasks, setTasks] = useState(plant.tasks);
   const [note, setNote] = useState('');
   const [savedNote, setSavedNote] = useState('');
@@ -491,7 +492,7 @@ function App() {
 
           <motion.section className="hero-card" aria-labelledby="plant-title" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.08 }}>
             <div className="hero-copy">
-              <span className="stage-pill"><span /> IN THE GROUND FOR {plant.day} DAYS</span>
+              <span className="stage-pill"><span /> IN THE GROUND FOR {plant.day} {dayUnit.toUpperCase()}</span>
               <h2 id="plant-title">Meet your<br /><em>{plant.variety}.</em></h2>
               <p>{plant.summary}</p>
               <a className="text-link" href="#growth">Follow its growth <span>↗</span></a>
@@ -504,7 +505,7 @@ function App() {
             <motion.article className="stat-card" whileHover={{ y: -3 }} transition={{ duration: 0.18 }}>
               <span className="stat-icon stat-icon-green"><Icon name="plant" size={19} /></span>
               <span className="stat-label">GROWING FOR</span>
-              <strong>{plant.day} <small>days</small></strong>
+              <strong>{plant.day} <small>{dayUnit}</small></strong>
               <span className="stat-foot"><span className="tiny-dot green" /> Right on schedule</span>
             </motion.article>
             <motion.article className="stat-card" whileHover={{ y: -3 }} transition={{ duration: 0.18 }}>

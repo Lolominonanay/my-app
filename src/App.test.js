@@ -50,6 +50,9 @@ test('shows the eggplant dashboard and growing stages', async () => {
   render(<App />);
 
   expect(screen.getByRole('group', { name: 'Plant 01 of 05' })).toHaveTextContent('01 / 05');
+  expect(document.querySelector('.progress-caption')).toHaveTextContent('Day 1 of about 90');
+  expect(screen.getByText('1% there')).toBeInTheDocument();
+  expect(screen.getByText('IN THE GROUND FOR 1 DAY')).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: /growing something wonderful/i })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: /meet your black beauty/i })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: /your growing story/i })).toBeInTheDocument();
@@ -63,6 +66,8 @@ test('shows the tomato page with its own growth stages and care guide', async ()
 
   expect(screen.getByRole('heading', { name: /meet your sungold/i })).toBeInTheDocument();
   expect(screen.getByRole('group', { name: 'Plant 02 of 05' })).toHaveTextContent('02 / 05');
+  expect(document.querySelector('.progress-caption')).toHaveTextContent('Day 1 of about 85');
+  expect(screen.getByText('1% there')).toBeInTheDocument();
   expect(screen.getByRole('img', { name: /ripe tomatoes growing on a leafy vine/i })).toBeInTheDocument();
   expect(screen.getByText('Fruit set')).toBeInTheDocument();
   expect(screen.getByText('Water deeply at the base')).toBeInTheDocument();
@@ -77,6 +82,7 @@ test.each([
     slug: 'okra',
     heading: /meet your clemson spineless/i,
     counter: 'Plant 03 of 05',
+    totalDays: 60,
     image: /okra pods growing on a leafy plant/i,
     stage: 'Young pods',
     task: 'Look for tender new pods',
@@ -86,6 +92,7 @@ test.each([
     slug: 'kalabasa',
     heading: /meet your philippine kalabasa/i,
     counter: 'Plant 04 of 05',
+    totalDays: 110,
     image: /ripe kalabasa squash growing on a vine/i,
     stage: 'Flowers open',
     task: 'Look for fresh yellow flowers',
@@ -95,17 +102,21 @@ test.each([
     slug: 'cucumber',
     heading: /meet your green gem/i,
     counter: 'Plant 05 of 05',
+    totalDays: 60,
     image: /fresh cucumbers growing on a leafy vine/i,
     stage: 'Fruit set',
     task: 'Check the vine supports',
     guide: 'Pick before seeds enlarge',
   },
-])('shows the $slug dashboard with its own guide and plant number', async ({ slug, heading, counter, image, stage, task, guide }) => {
+])('shows the $slug dashboard with its own guide and plant number', async ({ slug, heading, counter, totalDays, image, stage, task, guide }) => {
   window.history.replaceState({}, '', `/?plant=${slug}`);
   render(<App />);
 
   expect(screen.getByRole('heading', { name: heading })).toBeInTheDocument();
   expect(screen.getByRole('group', { name: counter })).toBeInTheDocument();
+  expect(document.querySelector('.progress-caption')).toHaveTextContent(`Day 1 of about ${totalDays}`);
+  expect(screen.getByText('1% there')).toBeInTheDocument();
+  expect(screen.getByText('IN THE GROUND FOR 1 DAY')).toBeInTheDocument();
   expect(screen.getByRole('img', { name: image })).toBeInTheDocument();
   expect(screen.getByText(stage)).toBeInTheDocument();
   expect(screen.getByText(task)).toBeInTheDocument();
